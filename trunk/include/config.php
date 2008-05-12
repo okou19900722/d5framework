@@ -37,8 +37,8 @@
 		"time_format"		=>		"Y-m-d H:i:s",							# 日期格式
 		"date_format"		=>		"Y-m-d",								# 日期格式
 		
-		"name"				=>		"PAILA!",								# 标题
-		"ver"				=>		"0.17",									# 版本
+		"name"				=>		"D5Framework",							# 标题
+		"ver"				=>		"1.0",									# 版本
 	);
 		
 	$config['page']=array(

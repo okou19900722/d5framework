@@ -12,7 +12,7 @@
 	# 系统文件包含 ================================================= 
 	
 	require_once("include/config.php");
-	require_once("include/db_mouse.php");
+	require_once("include/db_d5power.php");
 	require_once("include/function.php");
 	require_once("include/webfunction.php");
 	
