@@ -1,0 +1,50 @@
+<?php
+print <<<D5
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$msg_type}</title>
+<link href="{$GLOBALS['template']}/images/sys.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div id="error" style="top:30%">
+<ul>
+	<table width="500" height="300" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#E5E5E5">
+	<tr>
+	<td valign="top" bgcolor="#FFFFFF">
+	
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		
+		<tr>
+		<td class="d5title">出错啦！</td>
+		</tr>
+		
+		</table>
+		
+		
+		
+		
+		
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		
+		<tr>
+		  <td height="200" align="center"><span>{$msg}</span></td>
+		</tr>
+		
+		<tr>
+		  <td align="center"><a href='{$back}'>[返回]</a></td>
+		</tr>
+		
+		</table>
+	
+	</td>
+	</tr>
+	</table>
+</ul>
+</div>
+</body>
+</html>
+D5;
+?>
