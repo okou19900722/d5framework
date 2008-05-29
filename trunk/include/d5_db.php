@@ -12,7 +12,7 @@
 
 	// Database class
 	
-	class db_mouse{
+	class d5_db{
 	
 		var $sqlinfo;			//SQL语言信息
 		var $num;   			//记录数
