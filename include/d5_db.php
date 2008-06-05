@@ -21,7 +21,7 @@
 		var $db_ver;			//取得MYSQL版本号
 	
 		//构造函数
-		function db_mouse()
+		function d5_db()
 		{		
 			$db_ver=mysql_fetch_array(mysql_query("select version()"));
 			$db_ver=floatval(substr($db_ver['version()'],0,3));											//取得MYSQL版本号
