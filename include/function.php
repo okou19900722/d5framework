@@ -1,11 +1,13 @@
 <?php
 
-    /***********************************************
+	/***********************************************
 	 *
-	 *		D5Framework
-	 *
-	 *		author:Benmouse		date:2007-11-12
-	 *
+	 *	D5Framework
+	 *	D5Power Studio
+	 *	author:Benmouse		date:2007-10-14
+	 *	Update:2008-06-10	Ver:1.0
+	 *	第五动力工作室 - D5轻型开发框架
+	 *	
 	 *
 	 **********************************************/
 	 
@@ -85,8 +87,9 @@
 	}
 	
 	#信息处理函数 =========================================
-	function msg($msg,$msg_type="ERROR",$back="javascript:window.history.go(-1)")
+	function msg($msg,$msg_type='',$back="javascript:window.history.go(-1)")
 	{
+		if($msg_type=='') $msg_type=$GLOBALS['lang']['sys']['msg_default_title'];
 		$mainpath="../";
 		$path="../{$GLOBALS['config']['sys']['temp_path']}sys/{$GLOBALS['config']['sys']['temp']}/";
 		require_once(makeTemp("error"));

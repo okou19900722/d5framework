@@ -5,20 +5,29 @@ print <<<D5
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>{$msg_type}</title>
-<link href="{$GLOBALS['template']}/images/sys.css" rel="stylesheet" type="text/css" />
+<style>
+*{font-family:Verdana, Arial;font-size:12px;}
+a{color:#666; text-decoration:none}
+body{margin:0px;padding:0px}
+
+#error{top:120px; position:absolute;margin-left:auto;margin-right:auto;width:100%}
+.returnBt{display:block;width:80px;height:30px;background:#DDD;line-height:30px;border-top:#EEE 2px solid;border-left:#EEE 2px solid;border-right:solid 1px #999;border-bottom:solid 1px #999;font-size:14px;color:#333}
+#error_info{margin-top:5px;margin-left:5px;font-size:14px;}
+</style>
 </head>
 
 <body>
-<div id="error" style="top:30%">
+<div id="error">
 <ul>
-	<table width="500" height="300" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#E5E5E5">
+	<table width="500" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#E5E5E5">
 	<tr>
-	<td valign="top" bgcolor="#FFFFFF">
+	<td valign="top" bgcolor="#FFFFFF" style="padding:5px">
 	
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		
-		<tr>
-		<td class="d5title">出错啦！</td>
+		<tr style="background:#DDD;">
+		<td class="d5title" style="font-size:14px;line-height:25px;padding:5px">{$msg_type}</td>
+		<td class="d5title" align="right"><img src="{$GLOBALS['template']}/images/error_logo.jpg"</td>
 		</tr>
 		
 		</table>
@@ -27,14 +36,14 @@ print <<<D5
 		
 		
 		
-		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<table width="100%" height="120" border="0" cellspacing="0" cellpadding="0">
 		
 		<tr>
-		  <td height="200" align="center"><span>{$msg}</span></td>
+		  <td id="error_box"><span id="error_info">{$msg}</span></td>
 		</tr>
 		
 		<tr>
-		  <td align="center"><a href='{$back}'>[返回]</a></td>
+		  <td align="center"><a href='{$back}' class="returnBt">确 定</a></td>
 		</tr>
 		
 		</table>
@@ -44,6 +53,20 @@ print <<<D5
 	</table>
 </ul>
 </div>
+<script language="javascript">
+	function autoStyle()
+	{
+		var checker = document.getElementById('error_info').innerHTML.length;
+		var otarg = document.getElementById('error_box');
+		if(checker>20)
+		{
+			otarg.align='left';
+		}else{
+			otarg.align='center';
+		}
+	}
+	autoStyle()
+</script>
 </body>
 </html>
 D5;
