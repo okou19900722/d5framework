@@ -1,12 +1,13 @@
 <?php
 
-	
 	/***********************************************
 	 *
-	 *		D5Framework
-	 *
-	 *		author:Benmouse		date:2007-11-12
-	 *
+	 *	D5Framework
+	 *	D5Power Studio
+	 *	author:Benmouse		date:2007-10-14
+	 *	Update:2008-06-10	Ver:1.0
+	 *	第五动力工作室 - D5轻型开发框架
+	 *	
 	 *
 	 **********************************************/
 	
@@ -14,7 +15,7 @@
 	
 		"hostname"		=>		"localhost",									# 主机地址
 		"username"		=>		"root",											# 主机用户名
-		"password"		=>		"",												# 登陆密码
+		"password"		=>		"root",												# 登陆密码
 		"dbname"		=>		"test",											# 数据库名
 		"encode"		=>		"utf-8"											# 编码方式
 		
