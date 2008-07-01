@@ -8,7 +8,8 @@
 	 *	
 	 *	example: 	$d5f = new D5F();
 	 *				$d5f->loop("loopUserinfo",makeTemp("looptest"));
-	 *				$loopUserinfo.=$d5f->parse("userdate","Howard D5power");
+	 *				$d5f->parse("userdate","Howard D5power");
+	 *				$loopUserinfo.=$d5f->out();
 	 *
 	 *
 	 *	html:		<!-- loopUserinfo
@@ -22,6 +23,7 @@
 		var $template;
 		var $lable;
 		var $looper;
+		var $loopbox;
 		
 		function D5F()
 		{
@@ -38,10 +40,12 @@
 			// 取文件
 			if(!$fp = fopen($template,"r")) msg("File not exist.");
 			$files = fread($fp,filesize($template));
+			fclose($fp);
 			
 			$reg = "/\<\!\-\- {$lable}(.*){$lable} \-\-\>/is";
 			preg_match($reg,$files,$result);
-			$this->looper = $result[1];
+			$this->loopbox = $result[1];
+			
 		}
 		
 		/**
@@ -52,11 +56,33 @@
 		 */
 		function parse($lable,$value)
 		{
-			if(empty($this->looper)) msg('Please run loop function first to setup the loop templates.');
-			//$reg = "/\{\".$lable."\}/i";
-			//$result = preg_replace($reg,$value,$this->looper);
-			$result = str_replace("{\$".$lable."}",$value,$this->looper);
+			if(empty($this->loopbox)) msg('Please run loop function first to setup the loop templates.');
+			$this->looper = str_replace("{\$".$lable."}",$value,$this->looper);
+		}
+		
+		/**
+		 *	
+		 *	
+		 *	
+		 *	
+		 */
+		function out()
+		{
+			$result=$this->looper;
+			$this->looper=$this->loopbox;
 			return $result;
+		}
+		/**
+		 *
+		 *
+		 *
+		 *
+		 *
+		 */
+		function clear()
+		{
+			$this->looper = "";
+			$this->loopbox = "";
 		}
 	}
 
