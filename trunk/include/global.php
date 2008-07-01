@@ -17,6 +17,7 @@
 	require_once("include/d5_db.php");
 	require_once("include/function.php");
 	require_once("include/webfunction.php");
+	require_once("include/D5F.php");
 	
 	# 驱动文件包含 =================================================
 	

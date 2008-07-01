@@ -45,7 +45,7 @@
 			$reg = "/\<\!\-\- {$lable}(.*){$lable} \-\-\>/is";
 			preg_match($reg,$files,$result);
 			$this->loopbox = $result[1];
-			
+			$this->looper = $this->loopbox;
 		}
 		
 		/**
