@@ -63,26 +63,34 @@
 	
 	
 	#截取函数定义 ========================================
-	function msubstr($str, $start, $len)
-	{ 
-		$tmpstr = "";
-		$strlen = $start + $len; 
-		for($i = 0; $i < $strlen; $i++)
-		{ 
-			if(ord(substr($str, $i, 1)) > 0xa0)
-			{ 
-				$tmpstr .= substr($str, $i, 2); 
-				$i++; 
-			}else{
-				$tmpstr .= substr($str, $i, 1); 
-			}
-		} 
-		
-		if(strlen($str)>$len && $sl=="")
+	function msubstr($str, $start, $len,$code='UTF-8')
+	{
+		if(strtolower($code)=='utf-8')
 		{
-			return $tmpstr.".."; 
+			$pa = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/";
+			preg_match_all($pa, $str, $tmpstr);
+			if(count($tmpstr[0]) - $start > $len) return join('', array_slice($tmpstr[0], $start, $len))."...";
+			return join('', array_slice($tmpstr[0], $start, $len));
 		}else{
-			return $tmpstr;
+			$tmpstr = "";
+			$strlen = $start + $len; 
+			for($i = 0; $i < $strlen; $i++)
+			{ 
+				if(ord(substr($str, $i, 1)) > 0xa0)
+				{ 
+					$tmpstr .= substr($str, $i, 2); 
+					$i++; 
+				}else{
+					$tmpstr .= substr($str, $i, 1); 
+				}
+			} 
+			
+			if(strlen($str)>$len && $sl=="")
+			{
+				return $tmpstr.".."; 
+			}else{
+				return $tmpstr;
+			}
 		}
 	}
 	
@@ -382,7 +390,7 @@
 
 	//删除文件夹函数=========================================
 	
-	function delDir($mydir)
+	function delDir($mydir,$del_dir=true)
 	{
 		$d = dir($mydir);
 		$i = 0;
@@ -407,18 +415,17 @@
 		
 			}
 			
-	
-			if(rmdir($mydir))
+			if($del_dir)
 			{
-				return true;
+				$result=rmdir($mydir);
 			}else{
-				return false;
-			}
-			
+				$result=true;
+			}			
 		}else{
-			return false;
+			$result=false;
 		}
 		$d->close();
+		return $result;
 	}
 	
 	//二级域名判断
@@ -573,10 +580,10 @@
 				imagejpeg($new_img,$target);
 				break;
 			case "png":
-				imagejpeg($new_img,$target);
+				imagepng($new_img,$target);
 				break;
 			case "gif":
-				imagejpeg($new_img,$target);
+				imagegif($new_img,$target);
 				break;
 			default:$ext_name_error=true;break;
 		}
