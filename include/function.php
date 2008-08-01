@@ -514,6 +514,7 @@
 	
 	// 生成缩略图及图象格式转换函数
 	// @source 来源文件 @target 目标文件 @width 宽度 @height 高度 @format 转换格式
+	// 若按某一特定尺寸（固定高/固定宽）请将另外一个置0
 	function D5imger($source,$target,$change_size=false,$width=120,$height=90,$format="jpg")
 	{
 		// 转换为小写
@@ -539,26 +540,36 @@
 		
 		$old_width=imagesx($temp_img);
 		$old_height=imagesy($temp_img);
-		
-		// 计算比例
-		$source_ratio=$old_width/$old_height;
-		$target_ratio=$width/$height;
-		
-		// 假定高度不变，计算宽度
-		$temp_width=$old_height*$target_ratio;
-		
+
 		// 缩略图
 		if($change_size)
 		{
-			if($temp_width<=$old_width)
+			// 指定宽/高
+			if($width==0 && $height>0)
 			{
-				// 宽度未超出范围，高度优先
-				$old_width  = $old_height*$target_ratio;
-				$old_height = $old_height;
+				// 指定高
+				$width = $old_width/$old_height*height;
+			}else if($height==0 && $width>0){
+				// 指定宽
+				$height = $width/($old_width/$old_height);
 			}else{
-				// 宽度超出范围，以宽度优先
-				$old_width  = $old_width;
-				$old_height = $old_width/$target_ratio;
+				
+				// 计算比例
+				$source_ratio=$old_width/$old_height;
+				$target_ratio=$width/$height;
+				
+				// 假定高度不变，计算宽度
+				$temp_width=$old_height*$target_ratio;
+				
+				if($temp_width<=$old_width){
+					// 宽度未超出范围，高度优先
+					$old_width  = $old_height*$target_ratio;
+					$old_height = $old_height;
+				}else{
+					// 宽度超出范围，以宽度优先
+					$old_width  = $old_width;
+					$old_height = $old_width/$target_ratio;
+				}
 				
 			}
 		}else{
