@@ -515,7 +515,7 @@
 	// 生成缩略图及图象格式转换函数
 	// @source 来源文件 @target 目标文件 @width 宽度 @height 高度 @format 转换格式
 	// 若按某一特定尺寸（固定高/固定宽）请将另外一个置0
-	function D5imger($source,$target,$change_size=false,$width=120,$height=90,$format="jpg")
+	function D5imger($source,$target,$change_size=false,$width=0,$height=0,$format="jpg")
 	{
 		// 转换为小写
 		// $source=strtolower($source);
