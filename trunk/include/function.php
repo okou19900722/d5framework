@@ -642,4 +642,41 @@
 			return true;
 		}
 	}
+	
+	// 静态页面生成函数
+	function buildPage($module,$action,$var='',$save_name='',$save_path='')
+	{
+		global $config;
+		global $lang;
+		
+		// 若save_name为空，则以action为缓存文件名
+		$save_name = $save_name=="" ? "{$action}.html" : $save_name;
+		// 判断保存路径
+		if($save_path=="")
+		{
+			if(!is_mkdir("{$config['cache']['box']}/{$module}/")) msg("{$lang['sys']['can_not_create_folder']}{$config['cache']['box']}/{$module}/");
+			$save_path = "{$config['cache']['box']}/{$module}/";
+		}else{
+			if(!is_dir($save_path)) msg("{$lang['sys']['no_folder']}{$save_path}");
+		}
+		
+		$save_path = substr($save_path,-1,1)!="/" ? $save_path."/" : $save_path;
+		$target_name= $save_path.$save_name;
+
+		if(file_exists($target_name)) unlink($target_name) or msg("{$lang['sys']['can_not_overwrite']}{$target_name}");
+		
+		$f=file_get_contents("{$config['sys']['myhome']}index.php?module={$module}&action={$action}&buildPage=1&{$var}") or msg("{$lang['sys']['can_not_load_cache_source']}({$config['sys']['module_home']}/{$module}/{$action}.php");
+		fwrite(fopen($target_name,"w"),$f) or msg("{$lang['sys']['can_not_overwrite']}{$target_name}");
+	}
+	
+	// 检查缓存是否存在
+	function checkCache($module='',$action='',$target='')
+	{
+		global $config;
+		if($module=='' && $action=='' && $target=='') return false;
+		
+		$target = $target=='' ? "{$config['cache']['box']}/{$module}/{$action}.html" : $target;
+
+		return file_exists($target);
+	}
 ?>

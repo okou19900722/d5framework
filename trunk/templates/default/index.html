@@ -8,11 +8,15 @@ print <<<D5
             <td>
                 <div id='window_left'></div>
                 <div id='window_top' style="width:766px;">
-                    <span class="title">欢迎使用！Welcome to D5Framework!</span>
+                    <span class="title">欢迎使用！Welcome to D5Framework!{$is_cache}</span>
                 </div>
                 <div id='window_right'></div>
                 <div id='window_body' style="width:776px; height:260px">
                     <span style="display:block;width:766px;margin-left:5px;margin-top:110px;text-align:center">恭喜！第五动力轻型开发框架已经正常运行！<br>Congratulations!Your D5Framework is running!</span>
+                	<!-- LoopShow
+                    <span style="display:block">{$loop_char}</span>
+                    LoopShow -->
+                    {$loopshow}
                 </div>
                 <div id='window_left_b'></div>
                 <div id='window_bottom' style="width:766px;"></div>
