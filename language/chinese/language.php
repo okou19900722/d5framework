@@ -32,6 +32,11 @@
 		
 		"guest"									=>	"游客",
 		
+		"can_not_create_folder"					=>	"无法按要求创建文件夹",
+		"no_folder"								=>	"目标目录不存在",
+		"can_not_overwrite"						=>	"无法覆盖或写入文件",
+		"can_not_load_cache_source"				=>	"无法加载缓存源文件",
+		
 		"MH"								=>	"：",
 		"TH"								=>	"！ ",
 	);

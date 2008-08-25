@@ -27,8 +27,7 @@
 		"save_session_path" =>		"session",   							# session保存目录
 		"session_name"		=>		"paila",								# session名
 		
-		"myhome"			=>		"http://127.0.0.1/",					# 主页地址
-		"index_url"			=>		"http://127.0.0.1/paila/index/",		# 系统地址
+		"myhome"			=>		"http://127.0.0.1/d5framework/",					# 主页地址
 		"small_format"		=>		".gif",									# 全站缩略图生成格式
 		
 		"template"			=>		"default",								# 模版名
@@ -42,8 +41,12 @@
 		"ver"				=>		"1.0",									# 版本
 	);
 		
-	$config['page']=array(
+	$config['page'] = array(
 		"default"			=>		"10",									# 列表显示数量
+	);
+	
+	$config['cache'] = array(
+		"box"				=>		"cache",								# 缓村（静态页面）保存目录
 	);
  
 ?>

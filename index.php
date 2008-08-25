@@ -12,7 +12,7 @@
 	 **********************************************/
 	 
 	require_once("include/global.php");
-
+	
 	require_once(action_is_exists());
 	
 ?>
