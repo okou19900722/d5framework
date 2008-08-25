@@ -601,6 +601,37 @@
 		
 	}
 	
+	// 根据给定图片和一个固定尺寸，按照比例进行缩放，获得新的图片尺寸
+	function getCubeImg($img,$default_size)
+	{
+		if(!file_exists($img))
+		{
+			$result = array(
+				"w"		=>	0,
+				"h"		=>	0,
+			);
+		}else{
+			$img_size=@getimagesize($img);
+			if($img_size[0]>$img_size[1])
+			{
+				$img_width=$default_size;
+				$img_height = ceil($img_width/($img_size[0]/$img_size[1]));
+			}else if($img_size[0]<$img_size[1]){
+				$img_height=$default_size;
+				$img_width=ceil($img_height*($img_size[0]/$img_size[1]));
+			}else{
+				$img_width=$default_size;
+				$img_height=$default_size;
+			}
+			
+			$result = array(
+				"w"		=>	$img_width,
+				"h"		=>	$img_height,
+			);
+		}
+		return $result;
+	}
+	
 	// 检查文件夹是否存在，如果不存在，则创建
 	function is_mkdir($path)
 	{
