@@ -16,7 +16,7 @@ em{font-style:normal;}
 
 .window_left{background:#EFEFEF;height:25px;width:10px;border-left:solid 1px #A0B8C8;border-top:solid 1px #A0B8C8;float:left;margin-top:10px}
 .window_top{background:#EFEFEF;height:25px;line-height:25px;color:#021A84;font-weight:bold;border-top:solid 1px #A0B8C8;float:left;margin-top:10px}
-	.window_top span.title{font-size:14px;font-weight:bold;line-height:30px;color:#0033CC}
+	.window_top span.title{font-size:14px;font-weight:bold;line-height:25px;color:#0033CC}
 .window_right{background:#EFEFEF;height:25px;width:10px;border-right:solid 1px #A0B8C8;border-top:solid 1px #A0B8C8;float:left;margin-top:10px}
 
 .window_body{float:left;border-left:solid 1px #A0B8C8;border-right:solid 1px #A0B8C8;background:#EFEFEF;height:auto;overflow:hidden}
