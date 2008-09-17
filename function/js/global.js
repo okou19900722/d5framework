@@ -177,3 +177,22 @@
 		}
 		
 	}
+	
+	// 获取时间戳
+	function time()
+	{
+		var date = new Date();
+		var stemp = parseInt(date.getTime()/1000);
+		return stemp;
+	}
+	
+	// 非空判断
+	function empty(str)
+	{
+		if(str!=undefined && str!='' && str!=null)
+		{
+			return false;
+		}else{
+			return true;
+		}
+	}
