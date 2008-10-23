@@ -679,4 +679,11 @@
 
 		return file_exists($target);
 	}
+	
+	// 两者取一(You or Me)
+	function yom($y,$m)
+	{
+		$y = empty($y) ? $m : $y;
+		return $y;
+	}
 ?>
