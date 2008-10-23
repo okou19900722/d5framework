@@ -34,21 +34,7 @@
 
 	header("Content-Type: text/html; charset={$config['sys']['encode']}");
 	$template = "templates/{$GLOBALS['config']['sys']['template']}";
-	
-	// 载入模块及相关动作设置
-	
-	$module = empty($_GET['module']) ? "default" : $_GET['module'];
-	if(!is_dir($config['sys']['module_home']."/".$module) && $module!="admin") msg("($module) ".$lang['sys']['no_module'],$lang['sys']['error']);		# 检测模块是否存在
-	
-	$action = empty($_GET['action']) ? "index" : $_GET['action'];
-	if($module=="admin")
-	{
-		// 如果模块为admin，则直接加载管理目录中的文件驱动
-		if(!file_exists($module."/".$action.".php")) msg("($action) ".$lang['sys']['no_action'],$lang['sys']['error']); # 检测对应驱动是否存在
-	}else{
-		if(!file_exists($config['sys']['module_home']."/".$module."/".$action.".php")) msg("($action) ".$lang['sys']['no_action'],$lang['sys']['error']); # 检测对应驱动是否存在
-	}
-	
+
 	# SESSION设置 ================================================
 	
 	session_name($config['sys']['session_name']);			// 设置session名
