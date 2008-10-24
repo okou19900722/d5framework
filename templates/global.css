@@ -13,6 +13,11 @@ em{font-style:normal;}
 .alpha{opacity:0.8; filter: Alpha(Opacity=80);}
 
 /* ------------ 主页CSS代码开始 ------------ */
+/* 容器 */
+
+.left_box{float:left}
+.middle_box{float:left}
+.right_box{float:left}
 
 .window_left{background:#EFEFEF;height:25px;width:10px;border-left:solid 1px #A0B8C8;border-top:solid 1px #A0B8C8;float:left;margin-top:10px}
 .window_top{background:#EFEFEF;height:25px;line-height:25px;color:#021A84;font-weight:bold;border-top:solid 1px #A0B8C8;float:left;margin-top:10px}
