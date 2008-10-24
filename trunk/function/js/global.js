@@ -139,7 +139,7 @@
 		
 		try
 		{
-			rightBox = getElementByClass(father,'right_box')
+			rightBox = getElementByClass(father,'right_box');
 		}catch(e){
 			rightBox = null;
 		}
@@ -147,9 +147,23 @@
 		
 		// 尝试获取单元容器
 
-		if(leftBox.length>0) setWindow(leftBox[0]);
-		if(midBox.length>0) setWindow(midBox[0]);
-		if(rightBox.length>0) setWindow(rightBox[0]);
+		if(leftBox.length>0)
+		{
+			// 自动设置LEFT BOX
+			setWindow(leftBox[0]);
+		}
+		
+		if(midBox.length>0)
+		{
+			setWindow(midBox[0]);
+		}
+		if(rightBox.length>0)
+		{
+			var _w = parseInt(rightBox[0].style.width);
+			rightBox[0].style.width = (_w-block)+"px";
+			rightBox[0].style.marginLeft = block+"px";
+			setWindow(rightBox[0]);
+		}
 		
 		getid('father').style.display='';
 		
