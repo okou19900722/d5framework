@@ -61,6 +61,25 @@
 		}
 		
 		/**
+		 *
+		 *
+		 *
+		 */
+		function p($lable,$value)
+		{
+			if(empty($this->loopbox)) msg('Please run loop function first to setup the loop templates.');
+			if(is_array($lable) && is_array($value))
+			{
+				foreach($lable as $key=>$l)
+				{
+					$this->parse($l,$value[$key]);
+				}
+			}else{
+				$this->parse($lable,$value);
+			}
+		}
+		
+		/**
 		 *	
 		 *	
 		 *	
