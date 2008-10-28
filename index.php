@@ -17,7 +17,7 @@
 	/* ---------- 载入模块及相关动作设置 ------------ */
 	
 	$module = empty($_GET['module']) ? "default" : $_GET['module'];
-	if(!is_dir($config['sys']['module_home']."/".$module) && $module!="admin") msg("($module) ".$lang['sys']['no_module'],$lang['sys']['error']);		# 检测模块是否存在
+	if(!is_dir($config['sys']['module_home']."/".$module)) msg("($module) ".$lang['sys']['no_module'],$lang['sys']['error']);		# 检测模块是否存在
 	
 	$action = empty($_GET['action']) ? "index" : $_GET['action'];
 	if(!file_exists($config['sys']['module_home']."/".$module."/".$action.".php")) msg("($action) ".$lang['sys']['no_action'],$lang['sys']['error']); # 检测对应驱动是否存在
