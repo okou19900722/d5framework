@@ -19,7 +19,7 @@
 	$d5f->loop("LoopShow",makeTemp("index"));
 	for($i=0;$i<5;$i++)
 	{
-		$d5f->p(array('loop_char','loop_key'),array("HTML Loop output line {$i}",$i));
+		$d5f->p(array('loop_char'=>"HTML Loop output line {$i}",'loop_key'=>$i));
 		$loopshow.=$d5f->out();
 	}
 	

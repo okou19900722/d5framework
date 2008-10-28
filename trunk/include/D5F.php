@@ -65,17 +65,31 @@
 		 *
 		 *
 		 */
-		function p($lable,$value)
+		function p($lable,$value=NULL)
 		{
 			if(empty($this->loopbox)) msg('Please run loop function first to setup the loop templates.');
 			if(is_array($lable) && is_array($value))
 			{
+				// 调用模式一：双数组调用
 				foreach($lable as $key=>$l)
 				{
 					$this->parse($l,$value[$key]);
 				}
-			}else{
+				
+			}else if(is_array($lable) && $value==NULL){
+				
+				// 调用模式二：单数组调用
+				foreach($lable as $key=>$l)
+				{
+					$this->parse($key,$l);
+				}
+			
+			}else if(!is_array($lable) && !is_array($value)){
+				
+				// 调用模式三:普通字符串调用
 				$this->parse($lable,$value);
+			}else{
+				msg('Wrong prase mode.Please check your code.');
 			}
 		}
 		
@@ -102,6 +116,8 @@
 		{
 			$this->looper = "";
 			$this->loopbox = "";
+			unset($this->looper);
+			unset($this->loopbox);
 		}
 	}
 
