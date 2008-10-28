@@ -30,5 +30,7 @@
 	}else{
 		$is_cache = " 现在是缓存查看.";
 	}
+	require_once(makeTemp("head"));
 	require_once(makeTemp("index"));
+	require_once(makeTemp("foot"));
 ?>

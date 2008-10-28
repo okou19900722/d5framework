@@ -667,6 +667,10 @@
 		
 		$f=file_get_contents("{$config['sys']['myhome']}index.php?module={$module}&action={$action}&buildPage=1&{$var}") or msg("{$lang['sys']['can_not_load_cache_source']}({$config['sys']['module_home']}/{$module}/{$action}.php");
 		fwrite(fopen($target_name,"w"),$f) or msg("{$lang['sys']['can_not_overwrite']}{$target_name}");
+		
+		// 载入缓存
+		require_once($target_name);
+		die();
 	}
 	
 	// 检查缓存是否存在
@@ -676,8 +680,10 @@
 		if($module=='' && $action=='' && $target=='') return false;
 		
 		$target = $target=='' ? "{$config['cache']['box']}/{$module}/{$action}.html" : $target;
-
-		return file_exists($target);
+		
+		// 当文件存在，或buildPage标记为1时，返回真（不需要刷新换存）
+		$result = file_exists($target) || intval($_GET['buildPage'])==1;
+		return $result;
 	}
 	
 	// 两者取一(You or Me)
