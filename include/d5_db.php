@@ -35,7 +35,12 @@
 	
 		//插入新数据或更新原来的数据
 		function query($sqlinfo){
-			$this->result=mysql_query($sqlinfo) or die($sqlinfo);
+			if(DEBUG)
+			{
+				$this->result = mysql_query($sqlinfo) or die($sqlinfo);
+			}else{
+				$this->result = mysql_query($sqlinfo);
+			}
 			return $this->result;
 		}
 	
