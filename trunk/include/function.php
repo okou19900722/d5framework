@@ -643,6 +643,27 @@
 		}
 	}
 	
+	// 缓存路径生成函数
+	function loadCache($save_name='',$save_path='')
+	{
+		global $module;
+		global $action;
+		global $config;
+		global $lang;
+		
+		// 若save_name为空，则以action为缓存文件名
+		$save_name = $save_name=="" ? "{$action}.html" : $save_name;
+		$save_path = $save_path=='' ? "{$config['cache']['box']}/{$module}/" : $save_path;
+		
+		if(!is_dir($save_path)) msg("{$lang['sys']['no_folder']}{$save_path}");
+		
+		$cache = "{$config['cache']['box']}/{$module}/{$save_name}";
+		if(intval($_GET['buildPage'])==0 && file_exists($cache))
+		{
+			require_once($cache);
+		}
+	}
+
 	// 静态页面生成函数
 	function buildPage($module,$action,$var='',$save_name='',$save_path='')
 	{
