@@ -661,6 +661,7 @@
 		if(intval($_GET['buildPage'])==0 && file_exists($cache))
 		{
 			require_once($cache);
+			die();
 		}
 	}
 
