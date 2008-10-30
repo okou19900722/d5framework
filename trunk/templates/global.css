@@ -25,10 +25,12 @@ em{font-style:normal;}
 .window_right{background:#EFEFEF;height:25px;width:10px;border-right:solid 1px #A0B8C8;border-top:solid 1px #A0B8C8;float:left;margin-top:10px}
 
 .window_body{float:left;border-left:solid 1px #A0B8C8;border-right:solid 1px #A0B8C8;background:#EFEFEF;height:auto;overflow:hidden}
-
-.window_left_b{background:#EFEFEF;width:10px;height:15px;border-left:solid 1px #A0B8C8;border-bottom:solid 1px #A0B8C8;float:left}
+	.contentBox{position:relative;padding:5px;opacity:1;}
+	table .div{width:100%;border:none;border-collapse:collapse}
+	
+.window_bleft{background:#EFEFEF;width:10px;height:15px;border-left:solid 1px #A0B8C8;border-bottom:solid 1px #A0B8C8;float:left}
 .window_bottom{background:#EFEFEF;height:15px;border-bottom:solid 1px #A0B8C8;float:left}
-.window_right_b{background:#EFEFEF;width:10px;border-right:solid 1px #A0B8C8;border-bottom:solid 1px #A0B8C8;height:15px;float:left}
+.window_bright{background:#EFEFEF;width:10px;border-right:solid 1px #A0B8C8;border-bottom:solid 1px #A0B8C8;height:15px;float:left}
 
 /* 全局通用分页样式 */
 #pageinfo{width:100%; margin-left:auto; margin-right:auto; text-align:center;}
