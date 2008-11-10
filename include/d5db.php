@@ -14,7 +14,7 @@
 
 	// Database class
 	
-	class d5_db{
+	class d5db{
 	
 		var $sqlinfo;			//SQL语言信息
 		var $num;   			//记录数
@@ -23,7 +23,7 @@
 		var $db_ver;			//取得MYSQL版本号
 	
 		//构造函数
-		function d5_db()
+		function d5db()
 		{		
 			$db_ver=mysql_fetch_array(mysql_query("select version()"));
 			$db_ver=floatval(substr($db_ver['version()'],0,3));											//取得MYSQL版本号
@@ -32,7 +32,16 @@
 			if($db_ver>=4.1) mysql_query("SET NAMES '".str_replace("-","",$GLOBALS['config']['db']['encode'])."'");
 		}
 	
-	
+		// 连接数据库
+		function connect()
+		{
+			global $config['db'];
+			if(empty($config['db'])) die('Please setup database first.');
+			
+			$connect = @mysql_connect($config['db']['hostname'],$config['db']['username'],$config['db']['password']) or die("Can not connect to host:{$config['db']['hostname']}");
+			mysql_select_db($config['db']['dbname'],$connect) or die("Can not connect to database:{$config['db']['dbname']}");
+		}
+		
 		//插入新数据或更新原来的数据
 		function query($sqlinfo){
 			if(DEBUG)

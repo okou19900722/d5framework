@@ -46,11 +46,6 @@
 	# SUBMIT处理模式 ===========================================
 	
 	$mode=empty($_POST['mode']) ? $_GET['mode'] : $_POST['mode'];
-	
-	# 连接数据库 ================================================
-
-	$connect = @mysql_connect($config['db']['hostname'],$config['db']['username'],$config['db']['password']) or msg($lang['sys']['db_cannot_conn'].$lang['sys']['EL'].__LINE__);
-	mysql_select_db($config['db']['dbname'],$connect) or msg($lang['sys']['db_cannot_select'].$lang['sys']['EL'].__LINE__);
 
 	// 分页设置 ================================================
 	$_GET['page'] = empty($_GET['page']) ? $_POST['page'] : $_GET['page'] ;
