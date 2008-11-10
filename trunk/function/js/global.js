@@ -115,7 +115,13 @@
 	
 	function setupPage(father)
 	{
-		var father = getid(father);	// 获取容器ID
+		try
+		{
+			var father = getid(father);	// 获取容器ID
+			if(empty(father)) return false;
+		}catch(e){
+			return false;
+		}
 		var leftBox;					// 左内容容器
 		var midBox;						// 中内容容器
 		var rightBox;					// 右内容容器
