@@ -24,24 +24,25 @@
 	
 		//构造函数
 		function d5db()
-		{		
+		{
+			
+		}
+		
+		function connect()
+		{
+
+			if(empty($GLOBALS['config']['db'])) die('Please setup database first.');
+			
+			$connect = @mysql_connect($GLOBALS['config']['db']['hostname'],$GLOBALS['config']['db']['username'],$GLOBALS['config']['db']['password']) or die("Can not connect to host:{$GLOBALS['config']['db']['hostname']}");
+			mysql_select_db($GLOBALS['config']['db']['dbname'],$connect) or die("Can not connect to database:{$GLOBALS['config']['db']['dbname']}");
+			
 			$db_ver=mysql_fetch_array(mysql_query("select version()"));
 			$db_ver=floatval(substr($db_ver['version()'],0,3));											//取得MYSQL版本号
 			
 			//高于指定版本，指定编码
 			if($db_ver>=4.1) mysql_query("SET NAMES '".str_replace("-","",$GLOBALS['config']['db']['encode'])."'");
+			$this->db_ver = $db_ver;
 		}
-	
-		// 连接数据库
-		function connect()
-		{
-			global $config['db'];
-			if(empty($config['db'])) die('Please setup database first.');
-			
-			$connect = @mysql_connect($config['db']['hostname'],$config['db']['username'],$config['db']['password']) or die("Can not connect to host:{$config['db']['hostname']}");
-			mysql_select_db($config['db']['dbname'],$connect) or die("Can not connect to database:{$config['db']['dbname']}");
-		}
-		
 		//插入新数据或更新原来的数据
 		function query($sqlinfo){
 			if(DEBUG)
@@ -86,7 +87,7 @@
 		//获得数据库版本号
 		function get_db_ver()
 		{
-			return $db_ver;
+			return $this->db_ver;
 		}
 	
 		//获得num
