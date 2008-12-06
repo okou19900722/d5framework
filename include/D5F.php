@@ -25,9 +25,14 @@
 		var $looper;
 		var $loopbox;
 		
-		function D5F()
+		function D5F($lable=NULL,$template=NULL)
 		{
-			
+			if($lable!='' && $template!='')
+			{
+				$this->loop($lable,$template);
+				return;
+			}
+			if(!empty($lable) || !empty($template)) msg("You lost a data in D5F build process.");
 		}
 		
 		/**

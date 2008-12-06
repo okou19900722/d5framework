@@ -14,7 +14,7 @@
 	# 系统文件包含 ================================================= 
 	
 	require_once("include/config.php");
-	require_once("include/d5_db.php");
+	require_once("include/d5db.php");
 	require_once("include/function.php");
 	require_once("include/webfunction.php");
 	require_once("include/D5F.php");
