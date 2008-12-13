@@ -101,7 +101,7 @@
 		}
 	
 		//关闭数据库连接
-		function db_close()
+		function close()
 		{
 			mysql_close();
 		}
