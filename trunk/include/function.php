@@ -644,12 +644,21 @@
 	}
 	
 	// 缓存路径生成函数
-	function loadCache($save_name='',$save_path='')
+	// global_vars为在生成缓存后依然需要显示的变量
+	function loadCache($save_name='',$save_path='',$global_vars=array())
 	{
 		global $module;
 		global $action;
 		global $config;
 		global $lang;
+		
+		if(count($global_vars)>0)
+		{
+			foreach($global_vars as $key)
+			{
+				global $$key;
+			}
+		}
 		
 		// 若save_name为空，则以action为缓存文件名
 		$save_name = $save_name=="" ? "{$action}.html" : $save_name;
