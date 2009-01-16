@@ -37,6 +37,7 @@
 		'lang'				=>		'chinese',								# 前台语言
 		'time_format'		=>		'Y-m-d H:i:s',							# 日期格式
 		'date_format'		=>		'Y-m-d',								# 日期格式
+		'time_area'			=>		'Asia/Chongqing',						# 时区设置
 		
 		'name'				=>		'D5Framework',							# 标题
 		'ver'				=>		'1.0',									# 版本

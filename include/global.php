@@ -27,6 +27,9 @@
 	
 	require_once("language/{$config['sys']['lang']}/language.php");
 	
+	# 时区设置 =================================================
+	date_default_timezone_set($config['sys']['time_area']);
+	
 	# 系统相关设置 ================================================
 	
 	//error_reporting("E_ALL ^ E_NOTICE");                      																		# 错误报告模式
