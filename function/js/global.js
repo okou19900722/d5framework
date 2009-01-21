@@ -166,8 +166,11 @@
 		if(rightBox.length>0)
 		{
 			var _w = parseInt(rightBox[0].style.width);
-			rightBox[0].style.width = (_w-block)+"px";
-			rightBox[0].style.marginLeft = block+"px";
+			if(rightBox[0].style.marginLeft=='')
+			{
+				rightBox[0].style.width = (_w-block)+"px";
+				rightBox[0].style.marginLeft = block+"px";
+			}
 			setWindow(rightBox[0]);
 		}
 		
