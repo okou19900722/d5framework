@@ -7,20 +7,10 @@
 	 *
 	 **********************************************/
 	
-	// JavaScript Document
-	function loading(target)
-	{
-		
-	}
-	
-	function nullLoading()
-	{
-		
-	}
 	
 	function getid(id)
 	{
-		return document.getElementById(id);
+		return $('#'+id);
 	}
 	
 	// 复制到剪切版
@@ -95,24 +85,10 @@
 	/* ------ 根据样式获取DOM对象 ------ */
 	function getElementByClass(target,className)
 	{
-		matches = [];
-		nodes = target.childNodes;
-		for (i=0; i<nodes.length; i++)
-		{
-			try{
-				if (nodes[i].className == className)
-				{
-					matches[matches.length] = nodes[i];
-				}
-			}catch(e){}
-			
-		}
-		return matches;
-		
+		return $(target).children('.'+className);
 	}
 	
 	/* ------ 页面安装 ------ */
-	
 	function setupPage(father)
 	{
 		try
@@ -128,53 +104,73 @@
 		var temp;						// 临时变量
 		
 		var block = 10; //标准间距
+		
 		// 获取父容器，尝试所有可能的容器
 		try
 		{
-			leftBox = getElementByClass(father,'left_box');
+			leftBox = father.children('.left_box');
 		}catch(e){
 			leftBox = null;
 		}
 		
 		try
 		{
-			midBox = getElementByClass(father,'middle_box');
+			midBox = father.children('.middle_box');
 		}catch(e){
 			midBox = null;
 		}
 		
 		try
 		{
-			rightBox = getElementByClass(father,'right_box');
+			rightBox = father.children('.right_box');
 		}catch(e){
 			rightBox = null;
 		}
 		
 		
 		// 尝试获取单元容器
-
-		if(leftBox.length>0)
-		{
-			// 自动设置LEFT BOX
-			setWindow(leftBox[0]);
-		}
+		midBox.each(
+					function(i)
+					{
+						if(this.className=='middle_box')
+						{
+							if($(this).prev().attr('class')=='left_box')
+							{
+								_w = parseInt(this.style.width);
+								this.style.width = (_w-block)+"px";
+								this.style.marginLeft = block+"px";
+							}
+							setWindow(this);
+						}
+					}
+					);
 		
-		if(midBox.length>0)
-		{
-			setWindow(midBox[0]);
-		}
-		if(rightBox.length>0)
-		{
-			var _w = parseInt(rightBox[0].style.width);
-			if(rightBox[0].style.marginLeft=='')
-			{
-				rightBox[0].style.width = (_w-block)+"px";
-				rightBox[0].style.marginLeft = block+"px";
-			}
-			setWindow(rightBox[0]);
-		}
+		// 左箱
+		leftBox.each(
+					 function(i)
+					 {
+						if(this.className=='left_box')
+						{
+							setWindow(this);
+						}
+					 }
+					 );
 		
-		getid('father').style.display='';
+		// 右箱
+		rightBox.each(
+					  function(i)
+					  {
+						if(this.className=='right_box')
+						{
+							var _w = parseInt(this.style.width);
+							this.style.width = (_w-block)+"px";
+							this.style.marginLeft = block+"px";
+							setWindow(this);
+						} 
+					  }
+					  );
+		
+		father.css('display','');
 		
 		function setWindow(target)
 		{

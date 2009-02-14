@@ -13,7 +13,7 @@
 	 	
 	require_once("{$config['sys']['module_home']}/{$module}/_global.php");
 	
-	// 示例代码：缓存-静态页面生成
+	/* 示例代码：缓存-静态页面生成
 	if(!checkCache('default','index'))
 	{
 		buildPage('default','index');
@@ -31,7 +31,7 @@
 		$d5f->p(array('loop_char'=>"HTML Loop output line {$i}",'loop_key'=>$i));
 		$loopshow.=$d5f->out();
 	}
-	
+	*/
 	require_once(makeTemp("head"));
 	require_once(makeTemp("index"));
 	require_once(makeTemp("foot"));
