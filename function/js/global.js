@@ -6,11 +6,15 @@
 	 *	第五动力工作室 - D5轻型开发框架
 	 *
 	 **********************************************/
+	/* ------ 全局变量设置 ------ */
+	
+	var BLOCK = 10; // 窗体基本间距
 	
 	
+	/* ------ 全局函数声明 ------ */
 	function getid(id)
 	{
-		return $('#'+id);
+		return $('#'+id).get(0);
 	}
 	
 	// 复制到剪切版
@@ -93,7 +97,7 @@
 	{
 		try
 		{
-			var father = getid(father);	// 获取容器ID
+			var father = $('#father');	// 获取容器ID
 			if(empty(father)) return false;
 		}catch(e){
 			return false;
@@ -102,8 +106,6 @@
 		var midBox;						// 中内容容器
 		var rightBox;					// 右内容容器
 		var temp;						// 临时变量
-		
-		var block = 10; //标准间距
 		
 		// 获取父容器，尝试所有可能的容器
 		try
@@ -137,8 +139,8 @@
 							if($(this).prev().attr('class')=='left_box')
 							{
 								_w = parseInt(this.style.width);
-								this.style.width = (_w-block)+"px";
-								this.style.marginLeft = block+"px";
+								this.style.width = (_w-BLOCK)+"px";
+								this.style.marginLeft = BLOCK+"px";
 							}
 							setWindow(this);
 						}
@@ -163,38 +165,38 @@
 						if(this.className=='right_box')
 						{
 							var _w = parseInt(this.style.width);
-							this.style.width = (_w-block)+"px";
-							this.style.marginLeft = block+"px";
+							this.style.width = (_w-BLOCK)+"px";
+							this.style.marginLeft = BLOCK+"px";
 							setWindow(this);
 						} 
 					  }
 					  );
 		
 		father.css('display','');
-		
-		function setWindow(target)
+	}
+	
+	// 安装窗口
+	function setWindow(target)
+	{
+		// 函数，循环容器中所有指定样式的对象，并将其按照父容器的尺寸进行适应操作
+		var w = parseInt(target.style.width);
+		temp = getElementByClass(target,'window_top');
+		for(i=0;i<temp.length;i++)
 		{
-			// 函数，循环容器中所有指定样式的对象，并将其按照父容器的尺寸进行适应操作
-			var w = parseInt(target.style.width);
-			temp = getElementByClass(target,'window_top');
-			for(i=0;i<temp.length;i++)
-			{
-				temp[i].style.width=(w-block*2-2)+"px";
-			}
-			
-			temp = getElementByClass(target,'window_bottom');
-			for(i=0;i<temp.length;i++)
-			{
-				temp[i].style.width=(w-block*2-2)+"px";
-			}
-			
-			temp = getElementByClass(target,'window_body');
-			for(i=0;i<temp.length;i++)
-			{
-				temp[i].style.width=(w-2)+"px";
-			}
+			temp[i].style.width=(w-BLOCK*2-2)+"px";
 		}
 		
+		temp = getElementByClass(target,'window_bottom');
+		for(i=0;i<temp.length;i++)
+		{
+			temp[i].style.width=(w-BLOCK*2-2)+"px";
+		}
+		
+		temp = getElementByClass(target,'window_body');
+		for(i=0;i<temp.length;i++)
+		{
+			temp[i].style.width=(w-2)+"px";
+		}
 	}
 	
 	// 获取时间戳
