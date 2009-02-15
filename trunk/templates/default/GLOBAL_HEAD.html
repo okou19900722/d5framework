@@ -12,9 +12,12 @@ print <<<D5
 <script language='javascript' type='text/javascript' src='function/js/jquery.js'></script>
 <script language='javascript' type='text/javascript' src='function/js/global.js'></script>
 <script language='javascript' type='text/javascript' src='function/js/ajax.js'></script>
+<script language="javascript" type="text/javascript" src='function/js/desktop.js'></script>
+<script language="javascript" type='text/javascript' src='function/js/windowsManager.js'></script>
 <script language='javascript' type='text/javascript' src='{$module_js}'></script>
 </head>
-<body onload="setupPage('father')">
+<body onload="setupPage('father')" onmousemove='getMousePos()'>
+<div id="windowBox" onmouseup="unallow()"></div>
 
 D5;
 ?>
