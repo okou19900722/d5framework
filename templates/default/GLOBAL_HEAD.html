@@ -17,7 +17,21 @@ print <<<D5
 <script language='javascript' type='text/javascript' src='{$module_js}'></script>
 </head>
 <body onload="setupPage('father')" onmousemove='getMousePos()'>
+
+<!-- 窗口容器 -->
 <div id="windowBox" onmouseup="unallow()"></div>
+
+<!-- 提示框 -->     
+<div id="MSGbox" style="display:none">
+    <div id="MSGbox_background">
+        <li style="margin-top:10px;">
+        	<img src="templates/{$config['sys']['template']}/images/error_logo.jpg" />
+        </li>
+        <li id="msgbox_shower" style="margin-top:10px;">
+            
+        </li>
+    </div>
+</div>
 
 D5;
 ?>

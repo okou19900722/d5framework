@@ -217,3 +217,22 @@
 			return true;
 		}
 	}
+	
+	// 消息函数
+	function MSG(msg)
+	{
+		htmlbody=(document.documentElement.clientHeight<=document.body.clientHeight&&document.documentElement.clientHeight!=0)?document.documentElement:document.body;
+		scrollTop = (!window.innerHeight)?htmlbody.scrollTop:window.pageYOffset;
+		
+		
+		if(msg!=undefined && msg!='')
+		{
+			getid('msgbox_shower').innerHTML=msg;
+			getid('MSGbox').style.display='';
+			getid('MSGbox').style.top=scrollTop+($(window).width()/4)+"px";
+			getid('MSGbox').style.left=($(window).width()-$('#MSGbox').width())/2+"px";
+		}else{
+			getid('msgbox_shower').innerHTML='';
+			getid('MSGbox').style.display='none';
+		}
+	}
