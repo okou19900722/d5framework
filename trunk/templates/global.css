@@ -40,3 +40,8 @@ em{font-style:normal;}
 #pageinfo a{display:block; width:20px; height:15px; line-height:15px; float:left; background:#eefbff; border-right:solid 1px #00bafd; border-bottom:solid 1px #00bafd; font-size:10px; font-family:Verdana, Arial; text-decoration:none; margin-left:2px}
 #pageinfo a:hover{background:#c7f2ff; border-left:solid 1px #00bafd; border-top:solid 1px #00bafd;border-right:none; border-bottom:none;}
 #pageinfo a.selected{background:#c7f2ff;}
+
+/* 全局通用消息窗 */
+#MSGbox{border-color:#CCCCCC;position:absolute;z-index:998;border:solid 1px;width:300px;height:120px;margin:auto;background:#FFF;filter:alpha(opacity=80);moz-opacity:0.8;opacity:0.8;}
+#MSGbox_background{width:300px;height:120px;position:relative;z-index:999;}
+#MSGbox li{text-align:center;font-size:14px;margin-top:10px;padding:0px;margin:0px;display:block;width:300px;float:left}
