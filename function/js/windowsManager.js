@@ -36,6 +36,7 @@ function D5Window(title,w,h,url)
 	div.style.top="50px";
 	div.style.zIndex=default_level;
 	div.style.position="absolute";
+	div.style.display = "none";
 	div.onmousedown=function()
 	{
 		// 将窗口设置为最上层
@@ -68,6 +69,7 @@ function D5Window(title,w,h,url)
 	createBase(div);			// 将基本HTML信息插入创建好的窗口容器
 	desktop.appendChild(div);	// 将创建好的容器加入主层中进行显示
 	setWindowSize(div,w,h);		// 设置窗口尺寸
+	$(div).fadeIn('normal');
 	
 	// 获得信息拦的窗口
 	var bar=getElementByClass(div,'window_top')[0];
@@ -150,5 +152,5 @@ function windowMax(tar)
 function windowClose(tar)
 {
 	windowbox=getid(tar.getAttribute('boxid'));
-	desktop.removeChild(windowbox);
+	$(windowbox).fadeOut('fast',function(){desktop.removeChild(windowbox);});
 }

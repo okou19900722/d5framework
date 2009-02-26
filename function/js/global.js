@@ -173,6 +173,16 @@
 					  );
 		
 		father.css('display','');
+		
+		// 为窗体增加鼠标移动响应（for drag）
+		if(document.addEventListener)
+		{
+			// FF
+			document.addEventListener('mousemove',getMousePos,true);
+		}else{
+			//IE
+			document.attachEvent('onmousemove',getMousePos);
+		}
 	}
 	
 	// 安装窗口
