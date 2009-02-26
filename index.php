@@ -21,7 +21,16 @@
 	
 	$action = empty($_GET['action']) ? "index" : $_GET['action'];
 	if(!file_exists($config['sys']['module_home']."/".$module."/".$action.".php")) msg("($action) ".$lang['sys']['no_action'],$lang['sys']['error']); # 检测对应驱动是否存在
-	
+
+	$lang['test']='语言数组';
+	require_once('include/template.php');
+	$temp = new d5_template();
+	$temp->setTemplateDir(TEMPLATE_PATH.'/'.$module);//设置模板目录
+	$temp->setTemplatePath($action);//设置模板文件
+	$temp->setCacheDir(CACHE_PATH.'/'.$module);//设置缓存目录
+	$temp->setCachePath($action);//设置缓存文件
+	$temp->setLanguage($lang);//语言数组
 	require_once(action_is_exists());
+	include_once $temp->template();//模板编译到每个action里面用
 	
 ?>

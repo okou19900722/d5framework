@@ -15,7 +15,7 @@
 	
 		'hostname'		=>		'localhost',									# 主机地址
 		'username'		=>		'root',											# 主机用户名
-		'password'		=>		'root',											# 登陆密码
+		'password'		=>		'123456',											# 登陆密码
 		'dbname'		=>		'test',											# 数据库名
 		'encode'		=>		'utf-8'											# 编码方式
 		
@@ -54,4 +54,8 @@
 	
 	// 系统常量定义
 	define('DEBUG', $config['sys']['is_debug']);
+	define('IN_SITE',true);//站点状态常量
+	define('TEMPLATE_PATH','template');//模板总目录常量
+	define('CACHE_PATH','cache_php');//缓存总目录常量
+	$lang = array();//系统语言包数组
 ?>
