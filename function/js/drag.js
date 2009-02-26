@@ -88,10 +88,12 @@
 		curX=(!ie)?e.pageX : event.clientX+IeTrueBody().scrollLeft;
 		curY=(!ie)?e.pageY : event.clientY+IeTrueBody().scrollTop;
 		
+		/*
 		if(allowDrag) 
 		{
 			tag=getid(drag_target);
 			tag.style.left=(curX-chax)+"px";
 			tag.style.top=(curY-chay)+"px";
 		}
+		*/
 	}

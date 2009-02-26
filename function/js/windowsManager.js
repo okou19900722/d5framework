@@ -45,7 +45,26 @@ function D5Window(title,w,h,url)
 		
 		setDragTarget(this.id);
 		allow();
+		
+		
+		$(this).children('.window_body').children('.Window_context').css('display','none');
 	}
+	
+	div.onmousemove=function()
+	{
+		if(allowDrag && getid(drag_target)==this) 
+		{
+			this.style.left=(curX-chax)+"px";
+			this.style.top=(curY-chay)+"px";
+		}
+	}
+	
+	div.onmouseup=function()
+	{
+		unallow();
+		$(this).children('.window_body').children('.Window_context').css('display','');
+	}
+	
 	createBase(div);			// 将基本HTML信息插入创建好的窗口容器
 	desktop.appendChild(div);	// 将创建好的容器加入主层中进行显示
 	setWindowSize(div,w,h);		// 设置窗口尺寸
