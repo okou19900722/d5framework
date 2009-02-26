@@ -19,15 +19,17 @@ baseHTML+= "<div class=\"window_bottom\"></div>";
 baseHTML+= "<div class=\"window_bright\"></div>";
 baseHTML+= "<div class=\"div_clear\"></div>";
 
-function D5Window(title,w,h,url)
+function D5Window(url,title,w,h,action)
 {
 	if(desktop==null)
 	{
 		desktop=getid('windowBox');
 	}
 	// 默认尺寸
-	w=w==undefined ? 780 : w;
-	h=h==undefined ? 400 : h;
+	w = w==undefined ? 500 : w;
+	h = h==undefined ? 300 : h;
+	title = title==undefined ? '新窗口' : title;
+	action = action==undefined ? 0 : parseInt(action);
 	
 	var div=document.createElement("DIV");
 	div.setAttribute("class","windowBox");
@@ -37,6 +39,7 @@ function D5Window(title,w,h,url)
 	div.style.zIndex=default_level;
 	div.style.position="absolute";
 	div.style.display = "none";
+	div.setAttribute("action",action);
 	div.onmousedown=function()
 	{
 		// 将窗口设置为最上层
@@ -69,7 +72,22 @@ function D5Window(title,w,h,url)
 	createBase(div);			// 将基本HTML信息插入创建好的窗口容器
 	desktop.appendChild(div);	// 将创建好的容器加入主层中进行显示
 	setWindowSize(div,w,h);		// 设置窗口尺寸
-	$(div).fadeIn('normal');
+	
+	// 动画效果
+	switch(parseInt(div.getAttribute('action')))
+	{
+		case 1:
+			$(div).fadeIn('normal');
+			break;
+		
+		case 2:
+			$(div).slideDown('normal');
+			break;
+		
+		default:
+			$(div).css('display','');
+			break;
+	}
 	
 	// 获得信息拦的窗口
 	var bar=getElementByClass(div,'window_top')[0];
@@ -152,5 +170,6 @@ function windowMax(tar)
 function windowClose(tar)
 {
 	windowbox=getid(tar.getAttribute('boxid'));
-	$(windowbox).fadeOut('fast',function(){desktop.removeChild(windowbox);});
+	$(windowbox).css('display','none');
+	desktop.removeChild(windowbox);
 }
