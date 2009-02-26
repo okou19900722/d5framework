@@ -85,9 +85,9 @@
 	
 	function getMousePos(e)
 	{
+		alert(3);
 		curX=(!ie)?e.pageX : event.clientX+IeTrueBody().scrollLeft;
 		curY=(!ie)?e.pageY : event.clientY+IeTrueBody().scrollTop;
-		
 		/*
 		if(allowDrag) 
 		{
