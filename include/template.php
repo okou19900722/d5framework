@@ -177,13 +177,13 @@ class d5_template{
 		return "<script src=\"$s\" type=\"text/javascript\"></script>";
 	}
 
-	protected function setImage($start,$url,$end){
+/*	protected function setImage($start,$url,$end){
 		$url = $this->_templateDir.'/'.$url;
 		$start = $this->transamp($start);
 		$end = $this->transamp($end);
 		return "<img ".$start." src=\"".$url."\" ".$end.">";
 	}
-	
+	*/
 	protected function setLink($start,$url,$end){
 		$url = $this->_templateDir.'/'.$url;
 		$start = $this->transamp($start);
