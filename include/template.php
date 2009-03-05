@@ -52,10 +52,7 @@ class d5_template{
 	}
 	
 	public function setTemplatePath($filePath){
-		clearstatcache();
-		if(file_exists($this->_templateDir.'/'.$filePath.$this->_ext))
-		$this->_templatePath = $this->_templateDir.'/'.$filePath.$this->_ext;
-		else die('TEMPLATE FILE NOT FOUND');
+		$this->_templatePath = $this->_templateDir.'/'.$filePath.$this->_ext;		
 	}
 	
 	public function setCachePath($filePath){
@@ -179,7 +176,33 @@ class d5_template{
 		$s = str_replace('&amp;', '&', $s);
 		return "<script src=\"$s\" type=\"text/javascript\"></script>";
 	}
+
+	protected function setImage($start,$url,$end){
+		$url = $this->_templateDir.'/'.$url;
+		$start = $this->transamp($start);
+		$end = $this->transamp($end);
+		return "<img ".$start." src=\"".$url."\" ".$end.">";
+	}
 	
+	protected function setLink($start,$url,$end){
+		$url = $this->_templateDir.'/'.$url;
+		$start = $this->transamp($start);
+		$end = $this->transamp($end);
+		return "<link ".$start." href=\"".$url."\" ".$end.">";
+	}
+
+	/*protected function setImgBut($start,$url,$end){
+		$url = $this->_templateDir.'/'.$url;
+		$start = $this->transamp($start);
+		$end = $this->transamp($end);
+		return "<link ".$start." href=\"".$url."\" ".$end.">";
+	}*/
+	
+	protected function replaceSrc($url){
+		$url = $this->_templateDir.'/'.$url;
+		return " src=\"".$url."\" ";
+	}
+
 	protected function languagevar($var) {
 		if(isset($this->_language) && is_array($this->_language) && isset($this->_language[$var])) {
 				return $this->_language[$var];
@@ -237,7 +260,10 @@ class d5_template{
 		
 			$template = preg_replace("/\"(http)?[\w\.\/:]+\?[^\"]+?&[^\"]+?\"/e", "\$this->transamp('\\0')", $template);
 			$template = preg_replace("/\<script[^\>]*?src=\"(.+?)\".*?\>\s*\<\/script\>/ise", "\$this->stripscriptamp('\\1')", $template);
-			  
+			$template = preg_replace("/src\s*?\=\"(.*?)\"/ies","\$this->replaceSrc('\\1')",$template);
+			//$template = preg_replace("/<img([^>]*?)src\s*?\=\"(.*?)\"(.*?)>/ies","\$this->setImage('\\1','\\2','\\3')",$template); 
+			$template = preg_replace("/<link([^>]*?)href\s*?\=\"(.*?)\"(.*?)>/ies","\$this->setLink('\\1','\\2','\\3')",$template); 
+
 			$hash      = $this->file_hash($this->_templatePath);
 			$year    = gmdate('Y');
 			$month   = gmdate('m');
