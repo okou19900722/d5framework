@@ -246,3 +246,9 @@
 			getid('MSGbox').style.display='none';
 		}
 	}
+	
+	// 跳转函数
+	function changePage(url)
+	{
+		window.location = url;
+	}

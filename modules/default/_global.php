@@ -13,7 +13,7 @@
 	 
 	require_once("{$config['sys']['module_home']}/{$module}/_config.php");
 	
-	$module_css="";
+	//$module_css="templates/{$config['sys']['template']}/css.css";
 	$module_js="";
 	
 	if($action!="submit") require_once(makeTemp("GLOBAL_HEAD"));
