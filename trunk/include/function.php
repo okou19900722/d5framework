@@ -723,4 +723,34 @@
 		$y = empty($y) ? $m : $y;
 		return $y;
 	}
+	
+	function fmsg($msg="",$alert=false,$goto='')
+	{
+		// 如果设置了goto，则自动跳转
+		if($goto!='') $gotoScript = "try{changePage('{$goto}');}catch(e){try{parent.changePage('{$goto}');}catch(e){}}";
+		
+		
+		
+		// 如果设置了alert为假，则不弹出消息提示，采用系统消息函数MSG进行通知，并在5秒后自动关闭
+		if(!$alert)
+		{
+			$msgScript = "try{MSG('{$msg}');setTimeout('MSG()',5000)}catch(e){try{parent.MSG('{$msg}');parent.setTimeout('MSG()',5000)}catch(e){}}";
+		}else{
+		// 如果设置了alert为真，则弹出消息提示
+			$msgScript = "try{MSG('');}catch(e){try{parent.MSG('');}catch(e){}}";
+			$alertScript = "parent.alert('{$msg}');";
+		}
+		
+		die("<script language='javascript'>
+		{$alertScript}
+		{$msgScript}
+		{$gotoScript}
+		</script>");
+	}
+	
+	// 呼叫父级JS
+	function parentCall($action)
+	{
+		die("<script language='javascript'>{$action}</script>");
+	}
 ?>
