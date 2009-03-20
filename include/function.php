@@ -97,10 +97,16 @@
 	#信息处理函数 =========================================
 	function msg($msg,$msg_type='',$back="javascript:window.history.go(-1)")
 	{
-		if($msg_type=='') $msg_type=$GLOBALS['lang']['sys']['msg_default_title'];
 		$mainpath="../";
-		$path="../{$GLOBALS['config']['sys']['temp_path']}sys/{$GLOBALS['config']['sys']['temp']}/";
-		require_once(makeTemp("error"));
+		
+		if($msg_type=='') $msg_type=$GLOBALS['lang']['sys']['msg_default_title'];
+		if($msg_type=='SMALL')
+		{
+			require_once(makeTemp("error_small"));
+		}else{
+			$path="../{$GLOBALS['config']['sys']['temp_path']}sys/{$GLOBALS['config']['sys']['temp']}/";
+			require_once(makeTemp("error"));
+		}
 		die();
 	}
 	
