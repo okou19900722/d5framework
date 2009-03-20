@@ -9,6 +9,8 @@
 	/* ------ 全局变量设置 ------ */
 	
 	var BLOCK = 10; // 窗体基本间距
+	var changePage_memory = ""; //用于记忆跳转目标，呼叫跳转函数
+	var changePage_display = '';	// 用于页面跳转函数中记录显示容器
 	
 	
 	/* ------ 全局函数声明 ------ */
@@ -247,8 +249,54 @@
 		}
 	}
 	
-	// 跳转函数
-	function changePage(url)
+	/* ------ 页面跳转驱动开始 ------ */
+	
+	// 本函数用于页面的跳转，可以通过display_tar设置一个AJAX显示目标
+	// sender为附加发送的变量，将以POST方式进行方式。
+	// 同时callback将记录为页面读取完成后自动运行的回调函数。
+	// 如果AJAX显示目标display_tar未设置，则做当前页面的跳转
+	// 如果AJAX显示目标为parent,则在父级窗口中做页面跳转
+	function changePage(tar,display_tar,sender,callback)
 	{
-		window.location = url;
+		if(empty(display_tar))
+		{
+			// 普通跳转
+			window.location = tar;
+			return;
+		}
+		
+		if(display_tar=='parent')
+		{
+			window.parent.localtion=tar;
+			return;
+		}
+		
+		changePage_memory = callback;
+		changePage_display = display_tar;
+		
+		var myajax = new Ajax(changePage_ol,null);
+		var sendvar = sender == undefined ? '' : sender;
+		myajax.sendVar(tar,sendvar,"POST");
+		MSG('页面加载中...');
 	}
+	
+	
+	
+	function changePage_ol(reg)
+	{
+		if(reg.responseText=='') return;
+		
+		getid(changePage_display).innerHTML = reg.responseText;
+		
+		if(changePage_memory!="")
+		{
+			try
+			{
+				eval(changePage_memory+"()");
+				changePage_memory = '';
+			}catch(e){}
+		}
+		MSG();
+	}
+	
+	/* ------ 页面跳转驱动结束 ------ */
