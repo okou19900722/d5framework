@@ -32,7 +32,8 @@
 		$loopshow.=$d5f->out();
 	}
 	*/
-	require_once(makeTemp("head"));
-	require_once(makeTemp("index"));
-	require_once(makeTemp("foot"));
+	require_once(makeTemp("GLOBAL_HEAD"));
+	require_once(makeTemp("{$module}/head"));
+	require_once(makeTemp("{$module}/index"));
+	require_once(makeTemp("{$module}/foot"));
 ?>
