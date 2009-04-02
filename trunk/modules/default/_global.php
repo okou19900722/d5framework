@@ -15,6 +15,4 @@
 	
 	//$module_css="templates/{$config['sys']['template']}/css.css";
 	$module_js="";
-	
-	if($action!="submit") require_once(makeTemp("GLOBAL_HEAD"));
 ?>
