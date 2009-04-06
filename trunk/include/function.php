@@ -643,9 +643,65 @@
 	{
 		if(!is_dir($path))
 		{
-			return mkdir($path);
+			$r = smkdir($path);
+			if(!$r) msg('系统无权建立目录','SMALL');
+			return true;
 		}else{
 			return true;
+		}
+	}
+	
+	// 超级文件夹建立器
+	function smkdir($path)
+	{
+		$temp = explode('/',$path);
+		$p = '';
+		$result = true;
+		foreach($temp as $value)
+		{
+			$p.=$value.'/';
+			if(!is_dir($p)) $result=$result&&@mkdir($p);
+		}
+		return $result;
+	}
+	
+	// 文件上传
+	function uploadFile($filed,$target='userdata/',$rename='time',$maxsize=NULL,$allowtype=NULL)
+	{
+		if(empty($allowtype)) $allowtype=$GLOBALS['config']['upload']['allow'];
+		if(empty($maxsize))	$maxsize = $GLOBALS['config']['upload']['max'];
+		$upload_file_name = $rename=='time' ? time() : $rename;
+				
+		$maxsize = intval($maxsize);
+		if(substr($target,-1,1)!='/') $target.='/';
+				
+		if($_FILES[$filed]['size']>0)
+		{
+			// 文件判断
+			$upload_file=$_FILES[$filed]['tmp_name'];
+			// 获取扩展名
+			$extname=get_extname($_FILES[$filed]['name']);
+			// 文件类型判断
+			if(!in_array(strtolower($extname),$allowtype)) msg($extname.'没有被系统列为允许上传的格式','SMALL');
+			// 新文件名定义
+			$upload_file_name=$upload_file_name.".".$extname;
+			// 文件大小判断
+			$file_max=$maxsize*1024;
+			if($_FILES[$filed]['size']>$file_max) msg('您的图片大小为'.intval($_FILES[$filed]['size']/1024).'K，超过了系统允许的最大尺寸'.$maxsize.'K','SMALL');
+			// 上传目录检测
+			if(!is_dir($target))
+			{
+				$r=smkdir($target);
+				if(!$r) msg('系统无权建立目录'.$target.'，请与系统管理员联系','SMALL');
+			}
+					
+					
+			// 开始上传
+			$target_path = $target.$upload_file_name;
+			move_uploaded_file($upload_file,$target_path) or msg('上传文件失败，权限不足','SMALL');
+			return $target_path;
+		}else{
+			return '';
 		}
 	}
 	

@@ -51,6 +51,10 @@
 		'box'				=>		'cache',								# 缓村（静态页面）保存目录
 	);
  	
+	$config['upload'] = array(
+		'max'			=>	150,									# 允许上传文件的最大尺寸
+		'allow'			=>	array('jpg','gif','jpeg','bmp','png'),			# 允许上传文件的类型
+	);
 	
 	// 系统常量定义
 	define('DEBUG', $config['sys']['is_debug']);
