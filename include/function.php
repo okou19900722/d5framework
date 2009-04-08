@@ -670,7 +670,7 @@
 	{
 		if(empty($allowtype)) $allowtype=$GLOBALS['config']['upload']['allow'];
 		if(empty($maxsize))	$maxsize = $GLOBALS['config']['upload']['max'];
-		$upload_file_name = $rename=='time' ? time() : $rename;
+		$upload_file_name = $rename=='time' ? time().rand(0,99).'_'.rand(0,99) : $rename;
 				
 		$maxsize = intval($maxsize);
 		if(substr($target,-1,1)!='/') $target.='/';
