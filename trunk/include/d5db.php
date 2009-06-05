@@ -83,25 +83,89 @@
 			$this->row=mysql_fetch_array($this->result,MYSQL_ASSOC);
 			return $this->row;
 		}
+		
+		/**
+		 *	根据某字段特定值获得另外一字段的值
+		 *	@param	$value		值
+		 *	@param	$field		$value所对应的字段
+		 *	@param	$key		要取得的字段
+		 *	@param	$table		要查询的表
+		 */
+		 function getValue($key,$field,$value,$table)
+		 {
+			 $this->query("select {$key} from {$table} where {$field}='{$value}'");
+			 $this->fetch_array();
+			 return $this->row[$key];
+		 }
+		 
+		 /**
+		  *	根据sql获取单行的值
+		  *	@param $sql
+		  */
+		 public function val($sql)
+		 {
+			 $this->query($sql);
+			 $this->fetch_array();
+			 return $this->row;
+		 }
+		 
+		 /**
+		  *	根据sql获取全部返回数据
+		  *	@param	$sql
+		  *	@param	$max	// 最大记录数
+		  */
+		  public function vals($sql,$start=0,$max=0)
+		  {
+			  $max = $max==0 ? $GLOBALS['config']['page']['default'] : $max;
+			  $start = $start==0 ? $GLOBALS['$nowrecord'] : $start;
+			  $sql = strstr($sql,'LIMIT') ? $sql : $sql." LIMIT {$start},{$max}";
+			  $this->query($sql);
+			  if($this->fetch_array())
+			  {
+				  $result = array();
+				  do
+				  {
+					array_push($result,$this->row);
+				  }while();
+				  return $result;
+			  }else{
+			  	return NULL;
+			  }
+		  }
 	
-		//获得数据库版本号
-		function get_db_ver()
+		 /**
+		  *	获得数据库版本号
+		  */
+		public function get_db_ver()
 		{
 			return $this->db_ver;
 		}
 	
-		//获得num
-		function getnum(){
+		 /**
+		  *	获得记录数量
+		  */
+		public function getnum(){
 			return $this->num;
 		}
-	
-		function insert_id()
+		
+		/**
+		  *	最新插入ID
+		  */
+		public function insert_id()
 		{
 			return mysql_insert_id();
 		}
+		
+		/**
+		  *	获得影响行数
+		  */
+		public function affrows()
+		{
+			return mysql_affected_rows();
+		}
 	
 		//关闭数据库连接
-		function close()
+		public function close()
 		{
 			mysql_close();
 		}
