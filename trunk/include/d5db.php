@@ -126,7 +126,7 @@
 				  do
 				  {
 					array_push($result,$this->row);
-				  }while();
+				  }while($this->fetch_array());
 				  return $result;
 			  }else{
 			  	return NULL;
