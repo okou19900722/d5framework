@@ -25,10 +25,11 @@
 		var $looper;
 		var $loopbox;
 		var $files;
+		var $t;				# file content for template output at the end.
 		
-		function D5F($lable=NULL,$template=NULL)
+		public function D5F($lable=NULL,$template=NULL)
 		{
-			if(!empty($template)) $this->loop($lable,$template);
+			if(!empty($template)) $this->loop($lable,$template,true);
 		}
 		
 		/**
@@ -36,7 +37,7 @@
 		 *	And setup the context to loop.
 		 *	$lable - lablename $template - which template will be used
 		 */
-		function loop($lable='',$template='')
+		public function loop($lable='',$template='',$isinit=false)
 		{
 			if($template!='')
 			{
@@ -44,6 +45,9 @@
 				if(!$fp = fopen($template,"r")) msg("File not exist.");
 				$this->files = fread($fp,filesize($template));
 				fclose($fp);
+				
+				# 设置模版主文件
+				if($isinit) $this->t = $this->files;
 				if(empty($lable)) return;
 			}else{
 				if(empty($this->files)) msg('Please tell D5F which template be needed.');
@@ -60,9 +64,9 @@
 		 *	
 		 *	
 		 */
-		function parse($lable,$value)
+		public function parse($lable,$value)
 		{
-			if(empty($this->loopbox)) msg('Please run loop function first to setup the loop templates.');
+			if(empty($this->loopbox)) msg('Please run loop public function first to setup the loop templates.');
 			$this->looper = str_replace('{$'.$lable.'}',$value,$this->looper);
 		}
 		
@@ -71,10 +75,10 @@
 		 *
 		 *
 		 */
-		function p($lable,$value=NULL)
+		public function p($lable,$value=NULL)
 		{
 			global $module,$action;
-			if(empty($this->loopbox)) msg('Please run loop function first to setup the loop templates.');
+			if(empty($this->loopbox)) msg('Please run loop public function first to setup the loop templates.');
 			if(is_array($lable) && is_array($value))
 			{
 				# 自动编译module,action和template系统变量
@@ -119,11 +123,53 @@
 		 *	
 		 *	
 		 */
-		function out()
+		public function out()
 		{
 			$result=$this->looper;
 			$this->looper=$this->loopbox;
 			return $result;
+		}
+		
+		/**
+		 *	template
+		 *	
+		 *	
+		 */
+		public function template()
+		{
+			global $module,$action,$config;
+			/*
+			if(!checkCache('','',"{$config['cache']['box']}/{$module}/{$action}.html"))
+			{
+				buildPage($module,$action,'',$action.'.php');
+			}else{
+				$is_cache = " 现在是缓存查看.";
+				loadCache($action.'.php');
+			}
+			*/
+			$file_cache = "{$config['cache']['box']}/{$module}/{$action}/{$action}.php";
+			if(!file_exists($file_cache))
+			{
+				$template = $this->parseTemplate();
+				$path = "{$config['cache']['box']}/{$module}/{$action}";
+				if(smkdir($path))
+				{
+					$fp = fopen($file_cache,'w');
+					fwrite($fp,$template);
+					fclose($fp);
+				}else{
+					msg('Can not make catch dir!');
+				}
+			}
+			return $file_cache;
+		}
+		
+		public function parseTemplate()
+		{
+			$template = $this->t;
+			$template = preg_replace("/[\n\r\t]*\{template\s+([a-z0-9A-Z_\/]+)\}[\n\r\t]*/is", "\n<?php require_once(makeTemp('\\1')); ?>\n", $template);
+			$template = preg_replace("/\{(\\\$[a-zA-Z0-9_\[\]\'\"\$\.\x7f-\xff]+)\}/s", "<?php echo \\1;?>", $template);
+			return $template;
 		}
 		
 		/**
@@ -133,7 +179,7 @@
 		 *
 		 *
 		 */
-		function clear()
+		public function clear()
 		{
 			$this->looper = '';
 			$this->loopbox = '';
