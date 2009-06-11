@@ -12,7 +12,7 @@
 	 **********************************************/
 	 	
 	require_once("{$config['sys']['module_home']}/{$module}/_global.php");
-	
+	$d5f = new D5F('',makeTemp("{$module}/index"));
 	/* 示例代码：缓存-静态页面生成
 	if(!checkCache('default','index'))
 	{
@@ -32,8 +32,6 @@
 		$loopshow.=$d5f->out();
 	}
 	*/
-	require_once(makeTemp("GLOBAL_HEAD"));
-	require_once(makeTemp("{$module}/head"));
-	require_once(makeTemp("{$module}/index"));
-	require_once(makeTemp("{$module}/foot"));
+	
+	require_once($d5f->template());
 ?>
