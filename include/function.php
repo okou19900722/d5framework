@@ -63,13 +63,13 @@
 	
 	
 	#截取函数定义 ========================================
-	function msubstr($str, $start, $len,$code='UTF-8')
+	function msubstr($str, $start, $len, $backfllow='...',$code='UTF-8')
 	{
 		if(strtolower($code)=='utf-8')
 		{
 			$pa = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/";
 			preg_match_all($pa, $str, $tmpstr);
-			if(count($tmpstr[0]) - $start > $len) return join('', array_slice($tmpstr[0], $start, $len))."...";
+			if(count($tmpstr[0]) - $start > $len) return join('', array_slice($tmpstr[0], $start, $len)).$backfllow;
 			return join('', array_slice($tmpstr[0], $start, $len));
 		}else{
 			$tmpstr = "";
@@ -87,7 +87,7 @@
 			
 			if(strlen($str)>$len && $sl=="")
 			{
-				return $tmpstr.".."; 
+				return $tmpstr.$backfllow; 
 			}else{
 				return $tmpstr;
 			}
