@@ -61,5 +61,9 @@
 	define('IN_SITE',true);//站点状态常量
 	define('TEMPLATE_PATH','template');//模板总目录常量
 	define('CACHE_PATH','cache_php');//缓存总目录常量
+	
+	// D5CENTER定义
+	define('D5CENTER','');
+	define('D5KEY','');
 	$lang = array();//系统语言包数组
 ?>
