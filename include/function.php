@@ -95,16 +95,17 @@
 	}
 	
 	#信息处理函数 =========================================
-	function msg($msg,$msg_type='',$back="javascript:window.history.go(-1)")
+	function msg($msg,$msg_type='',$back="")
 	{
 		$mainpath="../";
 		
 		if($msg_type=='') $msg_type=$GLOBALS['lang']['sys']['msg_default_title'];
 		if($msg_type=='SMALL')
 		{
+			$back = $back=='' ? 'defaultCallback()' : $back;
 			require_once(makeTemp("error_small"));
 		}else{
-			$path="../{$GLOBALS['config']['sys']['temp_path']}sys/{$GLOBALS['config']['sys']['temp']}/";
+			$back = $back=='' ? 'javascript:window.history.go(-1)' : $back;
 			require_once(makeTemp("error"));
 		}
 		die();
@@ -244,6 +245,7 @@
 		
 		foreach($_GET as $key=>$value)
 		{
+			if($key=='buildPage') continue;
 			if($key!="{$page_var}" && $key!="{$ten_var}")
 			{
 				if(!empty($value)) $getinfo.="{$key}={$value}&";
@@ -728,7 +730,7 @@
 		
 		if(!is_dir($save_path)) msg("{$lang['sys']['no_folder']}{$save_path}");
 		
-		$cache = "{$config['cache']['box']}/{$module}/{$save_name}";
+		$cache = "{$save_path}/{$save_name}";
 		if(intval($_GET['buildPage'])==0 && file_exists($cache))
 		{
 			require_once($cache);
@@ -750,7 +752,10 @@
 			if(!is_mkdir("{$config['cache']['box']}/{$module}/")) msg("{$lang['sys']['can_not_create_folder']}{$config['cache']['box']}/{$module}/");
 			$save_path = "{$config['cache']['box']}/{$module}/";
 		}else{
-			if(!is_dir($save_path)) msg("{$lang['sys']['no_folder']}{$save_path}");
+			if(!is_dir($save_path))
+			{
+				if(!smkdir($save_path)) msg("{$lang['sys']['no_folder']}{$save_path}");
+			}
 		}
 		
 		$save_path = substr($save_path,-1,1)!="/" ? $save_path."/" : $save_path;

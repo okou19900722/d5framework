@@ -1,13 +1,27 @@
 <?php
 print <<<D5
-<div style='top:50%;position: absolute;'>
-<table class='div' style='width:98%' align='center'>
+<div style='top:40%;position: absolute;'>
+<table class='div' style="width:98%" align="center">
 <tr>
-	<td style="font-size:14px" align="center">
+	<td style="font-size:14px;" align="center">
 	{$msg}
+	</td>
+</tr>
+<tr>
+	<td style="font-size:14px;cursor:pointer" align="center" onclick="{$back}">
+	确定
 	</td>
 </tr>
 </table>
 </div>
+<script language="javascript">
+function defaultCallback()
+{
+	try
+	{
+		parent.windowClose();
+	}catch(e){}
+}
+</script>
 D5;
 ?>

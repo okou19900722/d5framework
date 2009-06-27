@@ -2,21 +2,21 @@
 var wid=0;
 var desktop;
 var default_level=3;
+var nowActiveWid=null;
 
-
-var baseHTML = "<div class=\"window_left\"></div>";
-baseHTML+= "<div class=\"window_top\">";
+var baseHTML = "<div class=\"window_left zwindow\"></div>";
+baseHTML+= "<div class=\"window_top zwindow\" style='cursor:move'>";
 	baseHTML+= "<a class=\"Window_title\"></a>";
-		baseHTML+= "<a class=\"Window_close_btn\" onClick='windowClose(this)'>×</a>";
-	baseHTML+= "<a class=\"Window_max_btn\" onClick='windowMax(this)'>□</a>";
+		baseHTML+= "<a class=\"Window_close_btn\" onClick='windowClose()' title='关闭窗口'>×</a>";
+	baseHTML+= "<a class=\"Window_max_btn\" onClick='windowMax(this)' title='最大化窗口'>□</a>";
 baseHTML+= "</div>";
-baseHTML+= "<div class=\"window_right\"></div>";
-baseHTML+= "<div class=\"window_body\">";
+baseHTML+= "<div class=\"window_right zwindow\"></div>";
+baseHTML+= "<div class=\"window_body zwindow\">";
 	baseHTML+= "<iframe class='Window_context' frameborder=\"0\" scrolling=\"auto\" width=\"100%\" height=\"100%\"></iframe>";
 baseHTML+= "</div>";
-baseHTML+= "<div class=\"window_bleft\"></div>";
-baseHTML+= "<div class=\"window_bottom\"></div>";
-baseHTML+= "<div class=\"window_bright\"></div>";
+baseHTML+= "<div class=\"window_bleft zwindow\"></div>";
+baseHTML+= "<div class=\"window_bottom zwindow\"></div>";
+baseHTML+= "<div class=\"window_bright zwindow\"></div>";
 baseHTML+= "<div class=\"div_clear\"></div>";
 
 function D5Window(url,title,w,h,action)
@@ -31,9 +31,11 @@ function D5Window(url,title,w,h,action)
 	title = title==undefined ? '新窗口' : title;
 	action = action==undefined ? 0 : parseInt(action);
 	
+	nowActiveWid = makeWindowsId(wid);
+	
 	var div=document.createElement("DIV");
 	div.setAttribute("class","windowBox");
-	div.setAttribute("id","window_box"+wid);
+	div.setAttribute("id",nowActiveWid);
 	div.style.left="50px";
 	div.style.top="50px";
 	div.style.zIndex=default_level;
@@ -50,9 +52,10 @@ function D5Window(url,title,w,h,action)
 		setDragTarget(this.id);
 		allow();
 		
-		
+		nowActiveWid = this.id;
 		$(this).children('.window_body').children('.Window_context').css('display','none');
 	}
+	
 	
 	div.onmousemove=function()
 	{
@@ -144,32 +147,58 @@ function windowMax(tar)
 {
 	windowbox=getid(tar.getAttribute('boxid'));
 	
-	var bar=getElementByClass(windowbox,'window_top')[0];
-
-	
-	isMax=getElementByClass(bar,'Window_max_btn')[0].getAttribute('isMax');
+	isMax=tar.getAttribute('isMax');
 	if(isMax==0 || isMax==undefined || isMax==null)
 	{
 		// 目前为正常状态，进行最大化操作
 		
-		getElementByClass(bar,'Window_max_btn')[0].setAttribute("isMax",'1');
-		setWindowSize(windowbox,1024,768);
-		getElementByClass(bar,'Window_max_btn')[0].innerHTML='_';
+		tar.setAttribute("isMax",'1');
+		windowbox.setAttribute('old_top',windowbox.style.top);
+		windowbox.setAttribute('old_left',windowbox.style.left);
+		windowbox.style.top='0px';
+		windowbox.style.left='0px';
 		
+		
+		// 获取屏幕有效尺寸
+		var maxWidth = $.browser.msie ? window.screen.availWidth-20 : window.screen.availWidth;
+		setWindowSize(windowbox,maxWidth,700);
+		tar.innerHTML='_';
+		tar.title='还原窗口';
 	}else{
 		// 目前为最大状态，进行还原操作
 		
-		getElementByClass(bar,'Window_max_btn')[0].setAttribute("isMax",'0');
-		ow=getElementByClass(bar,'Window_max_btn')[0].getAttribute('old_width');	// 获取原来记录下来的默认尺寸
-		oh=getElementByClass(bar,'Window_max_btn')[0].getAttribute('old_height');
+		tar.setAttribute("isMax",'0');
+		ow=tar.getAttribute('old_width');	// 获取原来记录下来的默认尺寸
+		oh=tar.getAttribute('old_height');
+		windowbox.style.top=windowbox.getAttribute('old_top');
+		windowbox.style.left=windowbox.getAttribute('old_left');
 		setWindowSize(windowbox,ow,oh);
-		getElementByClass(bar,'Window_max_btn')[0].innerHTML='□';
+		tar.innerHTML='□';
+		tar.title='最大化窗口';
 	}
 }
 
-function windowClose(tar)
+function windowClose()
 {
-	windowbox=getid(tar.getAttribute('boxid'));
-	$(windowbox).css('display','none');
-	desktop.removeChild(windowbox);
+	if(nowActiveWid==null) return;
+	$(nowActiveWid).css('display','none');
+	desktop.removeChild(getid(nowActiveWid));
+	nowActiveWid=null;
+}
+
+function makeWindowsId(key)
+{
+	win_id = "window_box"+key;
+	return win_id
+}
+
+function windowCloseAll()
+{
+	for(var i=0;i<wid;i++)
+	{
+		try{
+			nowActiveWid = makeWindowsId(i);
+			windowClose();
+		}catch(e){}
+	}
 }
