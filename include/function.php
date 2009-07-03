@@ -815,6 +815,91 @@
 		</script>");
 	}
 	
+	/**
+	 *	远程数据读取
+	 *	
+	 *	从$url参数为地址的远程页面抓取数据
+	 *	
+	 */
+	function getRemoteContent($url)
+	{
+		$i=0;
+		do
+		{
+			if($i>10) break;
+			$data = file_get_contents($url);
+			if(!empty($data)) break;
+			$i++;
+		}while(true);
+		
+		if($i>10)
+		{
+			return '';
+		}else{
+			return $data;
+		}
+	}
+	
+	/**
+	 *	提取某段文字内的远程文件并下载到本地
+	 *	@param src 源文件
+	 *	@param target 目标路径
+	 *	@param mode 下载模式 默认为img 自动下载全部图片
+	 *	return array('downloaded'->成功下载记数,'undownload'->未成功下载记数,'result'->成功下载的源地址与新地址的配对数组)
+	 */
+	function remoteDown($src,$target='userdata/remote/',$mode='img')
+	{
+		if(empty($src)) return array();
+		
+		// 驱除魔法引号
+		$src = stripslashes($src);
+		$downlist = array();
+		$undownload = 0;
+		$downloaded = 0;
+		$result = array();
+		
+		switch($mode)
+		{
+			case 'img':
+				// 正则匹配所有图片地址
+				preg_match_all("/src=[\"|'|\s]{0,}(http:\/\/([^>]*)\.(gif|jpg|png))/isU",$src,$downlist);
+				break;
+			default:	
+				return array();
+				break;
+		}
+		
+		foreach($downlist[1] as $key=>$value)
+		{
+			$data = getRemoteContent($value);
+			
+			if(empty($data))
+			{
+				$undownload++;
+				continue;
+			}else{
+				$file = time().'_'.$key.'.'.get_extname($value);
+				if(!is_dir($target)) smkdir($target) or msg('系统无权建立目录'.$target);
+
+				$targetfile = substr($target,-1)!='/' ? $target.'/'.$file : $target.$file;
+				$fp = @fopen($targetfile,'w');
+				fwrite($fp,$data);
+				fclose($fp);
+				$downloaded++;
+				array_push($result,array($value,$targetfile));
+			}
+		}
+		
+		$return = array(
+		'downloaded'		=>	$downloaded,
+		'undownload'		=>	$undownload,
+		'result'				=>	$result,
+		);
+		
+		return $return;
+	}
+	
+	
 	// 呼叫父级JS
 	function parentCall($action)
 	{
