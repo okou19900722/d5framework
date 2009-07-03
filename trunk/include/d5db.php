@@ -112,13 +112,15 @@
 		 /**
 		  *	根据sql获取全部返回数据
 		  *	@param	$sql
-		  *	@param	$max	// 最大记录数
+		  *	@param	$start	开始位置
+		  *	@param	$max	最大记录数
+		  *	@param	$getAll	是否获取全部数据（不分页）
 		  */
-		  public function vals($sql,$start=0,$max=0)
+		  public function vals($sql,$getAll=false,$start=0,$max=0)
 		  {
 			  $max = $max==0 ? $GLOBALS['config']['page']['default'] : $max;
 			  $start = $start==0 ? $GLOBALS['$nowrecord'] : $start;
-			  $sql = strstr($sql,'LIMIT') ? $sql : $sql." LIMIT {$start},{$max}";
+			  $sql = (strstr($sql,'LIMIT') || $getAll) ? $sql : $sql." LIMIT {$start},{$max}";
 			  $this->query($sql);
 			  if($this->fetch_array())
 			  {

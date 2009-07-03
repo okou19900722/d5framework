@@ -230,8 +230,14 @@
 		}
 	}
 	
-	// 消息函数
-	function MSG(msg)
+	/**
+	 *	消息函数
+	 *	@param msg 提示内容
+	 *	@param hold 消息停留时间，0为永久，如不设置本参数，则3秒自动消失
+	 *
+	 */
+	
+	function MSG(msg,hold)
 	{
 		htmlbody=(document.documentElement.clientHeight<=document.body.clientHeight&&document.documentElement.clientHeight!=0)?document.documentElement:document.body;
 		scrollTop = (!window.innerHeight)?htmlbody.scrollTop:window.pageYOffset;
@@ -243,6 +249,14 @@
 			getid('MSGbox').style.display='';
 			getid('MSGbox').style.top=scrollTop+($(window).width()/4)+"px";
 			getid('MSGbox').style.left=($(window).width()-$('#MSGbox').width())/2+"px";
+			
+			if(hold==undefined)
+			{
+				setTimeout('MSG()',3000);
+			}else if(parseInt(hold)>0){
+				setTimeout('MSG()',hold);
+			}
+			
 		}else{
 			getid('msgbox_shower').innerHTML='';
 			getid('MSGbox').style.display='none';
@@ -300,3 +314,22 @@
 	}
 	
 	/* ------ 页面跳转驱动结束 ------ */
+	
+	/**
+	 *	Json数据格式化（转为Object）
+	 *	@param str 服务器返回的字符数据
+	 *	返回 Object，其中Object.isObject表示是否标准JSON格式，Object.data为格式化后的数据
+	 */
+	function json_decode(str)
+	{
+		try
+		{
+			var data = eval("(" + str + ")");
+			var isarray = true;
+		}catch(e){
+			var data = str;
+			var isarray = false;
+		}
+		
+		return {isObject:isarray,data:data};
+	}
