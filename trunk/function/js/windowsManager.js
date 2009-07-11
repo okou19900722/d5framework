@@ -1,8 +1,11 @@
 // JavaScript Document
 var wid=0;
 var desktop;
-var default_level=3;
+var windowBox;
+var default_level=10003;
 var nowActiveWid=null;
+var htmpbody;
+var scrollTop;
 
 var baseHTML = "<div class=\"window_left zwindow\"></div>";
 baseHTML+= "<div class=\"window_top zwindow\" style='cursor:move'>";
@@ -19,11 +22,43 @@ baseHTML+= "<div class=\"window_bottom zwindow\"></div>";
 baseHTML+= "<div class=\"window_bright zwindow\"></div>";
 baseHTML+= "<div class=\"div_clear\"></div>";
 
-function D5Window(url,title,w,h,action)
+function D5Window(url,title,w,h,hasbg,action)
 {
+	hasbg = hasbg==undefined ? false : hasbg;
 	if(desktop==null)
 	{
-		desktop=getid('windowBox');
+		var sHeight;
+		if(window.screen.height>document.body.offsetHeight)
+		{
+			sHeight=window.screen.height;
+		}else{
+			sHeight=document.body.offsetHeight+28;
+		}
+		
+		htmlbody=(document.documentElement.clientHeight<=document.body.clientHeight&&document.documentElement.clientHeight!=0)?document.documentElement:document.body;
+		scrollTop = (!window.innerHeight)?htmlbody.scrollTop:window.pageYOffset;
+		
+		desktop=document.createElement("DIV");
+		desktop.setAttribute('id','desktop');
+		desktop.style.position="absolute";
+		desktop.style.top=scrollTop+"px";
+		desktop.style.background="#000";
+		desktop.style.opacity="0.70";
+		desktop.style.filter = "alpha(opacity=70)";
+		desktop.style.left="0px";
+		desktop.style.width=window.screen.width-21;
+		desktop.style.height=sHeight + "px";
+		desktop.style.zIndex = "10000";
+		if(!hasbg) desktop.style.display='none';
+		
+		document.body.appendChild(desktop);
+		
+		windowBox = document.createElement("DIV");
+		windowBox.setAttribute('id','windowBox');
+		windowBox.style.zIndex = "10001";
+		document.body.appendChild(windowBox);
+	}else{
+		desktop.style.display='';
 	}
 	// 默认尺寸
 	w = w==undefined ? 500 : w;
@@ -36,8 +71,8 @@ function D5Window(url,title,w,h,action)
 	var div=document.createElement("DIV");
 	div.setAttribute("class","windowBox");
 	div.setAttribute("id",nowActiveWid);
-	div.style.left="50px";
-	div.style.top="50px";
+	div.style.left=($(window).width()-w)/2+"px";
+	div.style.top=scrollTop+($(window).height()-h)/4+"px";
 	div.style.zIndex=default_level;
 	div.style.position="absolute";
 	div.style.display = "none";
@@ -73,7 +108,7 @@ function D5Window(url,title,w,h,action)
 	}
 	
 	createBase(div);			// 将基本HTML信息插入创建好的窗口容器
-	desktop.appendChild(div);	// 将创建好的容器加入主层中进行显示
+	windowBox.appendChild(div);	// 将创建好的容器加入主层中进行显示
 	setWindowSize(div,w,h);		// 设置窗口尺寸
 	
 	// 动画效果
@@ -160,7 +195,7 @@ function windowMax(tar)
 		
 		
 		// 获取屏幕有效尺寸
-		var maxWidth = $.browser.msie ? window.screen.availWidth-20 : window.screen.availWidth;
+		var maxWidth = $.browser.msie ? window.screen.availWidth-21 : window.screen.availWidth;
 		setWindowSize(windowbox,maxWidth,700);
 		tar.innerHTML='_';
 		tar.title='还原窗口';
@@ -182,8 +217,9 @@ function windowClose()
 {
 	if(nowActiveWid==null) return;
 	$(nowActiveWid).css('display','none');
-	desktop.removeChild(getid(nowActiveWid));
+	windowBox.removeChild(getid(nowActiveWid));
 	nowActiveWid=null;
+	if(desktop!=null) desktop.style.display='none';
 }
 
 function makeWindowsId(key)
@@ -201,4 +237,62 @@ function windowCloseAll()
 			windowClose();
 		}catch(e){}
 	}
+}
+
+/* ------ 小型窗口 ------ */
+function D5SWindow(url,msgw,msgh)
+{
+	var bordercolor;
+	var titleheight=25;
+	var bordercolor="#CCCCCC";
+	var sHeight;
+	
+	innerHTML = "<div class='zwindow' style='height:18px;width:"+msgw+"px'>";
+	innerHTML+= "<h4 style='margin:0px;padding:3px;color:White;cursor:pointer;font:12px Verdana;float:right;color:#000' onclick='D5SWindowClosed()'>×</h4>";
+	innerHTML+= "</div>";
+	innerHTML+= "<div style='height:"+msgh+"px;width:"+msgw+"px'>";
+	innerHTML+= "<iframe class='Window_context' src=\""+url+"\" frameborder=\"0\" scrolling=\"auto\" width=\"100%\" height=\"100%\"></iframe>";
+	innerHTML+= "</div>";
+	
+	if(window.screen.height>document.body.offsetHeight)
+	{
+		sHeight=window.screen.height;
+	}else{
+		sHeight=document.body.offsetHeight+28;
+	}
+	var D5SWindowBg=document.createElement("div");
+	D5SWindowBg.setAttribute('id','D5SWindowBgDiv');
+	D5SWindowBg.style.position="absolute";
+	D5SWindowBg.style.top="0px";
+	D5SWindowBg.style.background="#F6F5F5";
+	D5SWindowBg.style.opacity="0.70";
+	D5SWindowBg.style.filter = "alpha(opacity=70)";
+	D5SWindowBg.style.left="0px";
+	D5SWindowBg.style.width=window.screen.width-21;
+	D5SWindowBg.style.height=sHeight + "px";
+	D5SWindowBg.style.zIndex = "10000";
+	document.body.appendChild(D5SWindowBg);
+	
+	var D5SwindowMain=document.createElement("div")
+	D5SwindowMain.setAttribute("id","D5SwindowMainDiv");
+	D5SwindowMain.setAttribute("align","center");
+	D5SwindowMain.style.background="white";
+	D5SwindowMain.style.border="1px solid " + bordercolor;
+	D5SwindowMain.style.position = "absolute";
+	D5SwindowMain.style.left = "50%";
+	D5SwindowMain.style.top = "30%";
+	D5SwindowMain.style.marginLeft = "-"+(msgw/2)+"px";
+	D5SwindowMain.style.marginTop = -(msgh/2)+document.documentElement.scrollTop+"px";
+	D5SwindowMain.style.width = msgw + "px";
+	D5SwindowMain.style.height =msgh + "px";
+	D5SwindowMain.style.lineHeight =msgh + "px";
+	D5SwindowMain.style.textAlign = "center";
+	D5SwindowMain.style.zIndex = "10001";
+	D5SwindowMain.innerHTML=innerHTML;
+	document.body.appendChild(D5SwindowMain);
+}
+function D5SWindowClosed()
+{
+	document.body.removeChild(document.getElementById("D5SWindowBgDiv"));
+	document.body.removeChild(document.getElementById("D5SWindowMainDiv"));
 }
