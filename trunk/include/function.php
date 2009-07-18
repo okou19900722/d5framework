@@ -821,8 +821,9 @@
 	 *	从$url参数为地址的远程页面抓取数据
 	 *	
 	 */
-	function getRemoteContent($url)
+	function getRemoteContent($url,$source_encode='')
 	{
+		if($source_encode=='') $source_encode = $GLOBALS['config']['sys']['encode'];
 		$i=0;
 		do
 		{
@@ -836,6 +837,10 @@
 		{
 			return '';
 		}else{
+			if($source_encode!=$GLOBALS['config']['sys']['encode'] && function_exists("iconv"))
+			{
+				$data = iconv($source_encode,$GLOBALS['config']['sys']['encode'],$data);
+			}
 			return $data;
 		}
 	}
