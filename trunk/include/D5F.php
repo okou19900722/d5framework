@@ -3,7 +3,8 @@
 	/**
 	 *	
 	 *	D5Power Studio D5Framework Main class
-	 *	ver 1.0
+	 *	ver 2.0
+	 *	Author:D5Power.Howard
 	 *	Build for loop html in specile template
 	 *	
 	 *	example: 	$d5f = new D5F();
@@ -26,6 +27,7 @@
 		var $loopbox;
 		var $files;
 		var $t;				# file content for template output at the end.
+		var $useCache;		# if this var is true,D5F will write the cache file into configed cache path.
 		
 		public function D5F($lable=NULL,$template=NULL)
 		{
@@ -148,18 +150,25 @@
 			}
 			*/
 			$file_cache = "{$config['cache']['box']}/{$module}/{$action}/{$action}.php";
-			if(!file_exists($file_cache))
+			
+
+			if($this->useCache)
 			{
-				$template = $this->parseTemplate();
-				$path = "{$config['cache']['box']}/{$module}/{$action}";
-				if(smkdir($path))
+				if(!file_exists($file_cache))
 				{
-					$fp = fopen($file_cache,'w');
-					fwrite($fp,$template);
-					fclose($fp);
-				}else{
-					msg('Can not make catch dir!');
+					$template = $this->parseTemplate();
+					$path = "{$config['cache']['box']}/{$module}/{$action}";
+					if(smkdir($path))
+					{
+						$fp = fopen($file_cache,'w');
+						fwrite($fp,$template);
+						fclose($fp);
+					}else{
+						msg('Can not make catch dir!');
+					}
 				}
+			}else{
+				
 			}
 			return $file_cache;
 		}

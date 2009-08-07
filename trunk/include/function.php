@@ -828,7 +828,7 @@
 		do
 		{
 			if($i>10) break;
-			$data = file_get_contents($url);
+			$data = @file_get_contents($url);
 			if(!empty($data)) break;
 			$i++;
 		}while(true);
