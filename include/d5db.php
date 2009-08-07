@@ -105,8 +105,12 @@
 		 public function val($sql)
 		 {
 			 $this->query($sql);
-			 $this->fetch_array();
-			 return $this->row;
+			 if($this->fetch_array())
+			 {
+				 return $this->row;
+			 }else{
+			 	return false;
+			 }
 		 }
 		 
 		 /**
