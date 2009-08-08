@@ -123,7 +123,7 @@
 		  public function vals($sql,$getAll=false,$start=0,$max=0)
 		  {
 			  $max = $max==0 ? $GLOBALS['config']['page']['default'] : $max;
-			  $start = $start==0 ? $GLOBALS['$nowrecord'] : $start;
+			  $start = $start==0 ? $GLOBALS['nowrecord'] : $start;
 			  $sql = (strstr($sql,'LIMIT') || $getAll) ? $sql : $sql." LIMIT {$start},{$max}";
 			  $this->query($sql);
 			  if($this->fetch_array())
