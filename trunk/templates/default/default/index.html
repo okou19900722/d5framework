@@ -1,5 +1,6 @@
-{template GLOBAL_HEAD}
-{template default/head}
+<?php
+
+print <<<D5
         <div class="middle_box" style="width:778px">
             <div class='window_left'></div>
             <div class='window_top'>
@@ -7,7 +8,7 @@
             </div>
             <div class='window_right'></div>
             <div class='window_body'>
-                <span ondblclick="MSG('测试');" onclick="D5Window('http://127.0.0.1/Project/D5Framework','测试',400,300,2)" style="display:block;width:766px;margin-left:5px;margin-top:110px;text-align:center">恭喜！第五动力轻型开发框架已经正常运行！<br>Congratulations!Your D5Framework is running!</span>
+                <span onclick="MSG('测试',5000,'http://www.d5power.com');" style="display:block;width:766px;margin-left:5px;margin-top:110px;text-align:center">恭喜！第五动力轻型开发框架已经正常运行！<br>Congratulations!Your D5Framework is running!</span>
                 <!-- LoopShow
                 <span style="display:block">Line {$loop_key},The content is:{$loop_char}</span>
                 LoopShow -->
@@ -114,4 +115,5 @@ $aaa</span>
         </div>
         
         <div id="changePageTarget"></div>
-{template default/foot}
+D5;
+?>

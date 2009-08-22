@@ -234,10 +234,10 @@
 	 *	消息函数
 	 *	@param msg 提示内容
 	 *	@param hold 消息停留时间，0为永久，如不设置本参数，则3秒自动消失
-	 *
+	 *	@param url 跳转地址，当消息框消失后，自动引导用户到改页面
 	 */
 	
-	function MSG(msg,hold)
+	function MSG(msg,hold,url)
 	{
 		htmlbody=(document.documentElement.clientHeight<=document.body.clientHeight&&document.documentElement.clientHeight!=0)?document.documentElement:document.body;
 		scrollTop = (!window.innerHeight)?htmlbody.scrollTop:window.pageYOffset;
@@ -250,11 +250,18 @@
 			getid('MSGbox').style.top=scrollTop+($(window).width()/4)+"px";
 			getid('MSGbox').style.left=($(window).width()-$('#MSGbox').width())/2+"px";
 			
-			if(hold==undefined)
+			if(url!=undefined)
 			{
-				setTimeout('MSG()',3000);
+				var goto = url.substr(0,7)=='http://' ? url : '';
+				goto = goto=='' ? '' : ";window.location='"+goto+"';";
+			}else{
+				var goto = '';
+			}
+			if(hold==undefined || hold<=0)
+			{
+				setTimeout('MSG()'+goto,3000);
 			}else if(parseInt(hold)>0){
-				setTimeout('MSG()',hold);
+				setTimeout('MSG()'+goto,hold);
 			}
 			
 		}else{
