@@ -33,5 +33,10 @@
 	}
 	*/
 	
-	require_once($d5f->template());
+	// require_once($d5f->template()); 新增功能，暂未开放
+	
+	require_once(makeTemp('GLOBAL_HEAD'));
+	require_once(makeTemp('default/head'));
+	require_once(makeTemp('default/index'));
+	require_once(makeTemp('default/foot'));
 ?>
