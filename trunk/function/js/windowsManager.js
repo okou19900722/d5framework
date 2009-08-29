@@ -49,16 +49,16 @@ function D5Window(url,title,w,h,hasbg,action)
 		desktop.style.width=window.screen.width-21;
 		desktop.style.height=sHeight + "px";
 		desktop.style.zIndex = "10000";
-		if(!hasbg) desktop.style.display='none';
-		
 		document.body.appendChild(desktop);
+		
+		if(!hasbg) desktop.style.display='none';
 		
 		windowBox = document.createElement("DIV");
 		windowBox.setAttribute('id','windowBox');
 		windowBox.style.zIndex = "10001";
 		document.body.appendChild(windowBox);
 	}else{
-		desktop.style.display='';
+		if(hasbg) desktop.style.display='';
 	}
 	// 默认尺寸
 	w = w==undefined ? 500 : w;
