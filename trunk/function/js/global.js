@@ -340,3 +340,18 @@
 		
 		return {isObject:isarray,data:data};
 	}
+	
+	/**
+	 *	获取字符串的字节长度
+	 *	@ param value 想获得长度的字符串
+	 *	@ param isutf8	是否采用UTF8编码模式（1个汉字=3个字节）
+	 *	@ return 字节长度
+	 **/
+	function strlen(value,isutf8)
+	{
+		var perChinese = isutf8==undefined ? 2 : 3;
+		var matcher = value.match(/[^\u4e00-\u9fa5]/g);
+		var numofEnglish = matcher==null ? 0 : matcher.length;
+		var numofChinese = value.length-numofEnglish;
+		return (numofEnglish+numofChinese*perChinese);
+	}
