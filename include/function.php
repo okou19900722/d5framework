@@ -910,4 +910,35 @@
 	{
 		die("<script language='javascript'>{$action}</script>");
 	}
+	
+	/**
+	 *	获取远程数据
+	 *	@param	$ip			主机域名
+	 *	@param	$condition	变量内容
+	 *	@param 	$url			文件地址
+	 */
+	function fget_contents($ip,$condition,$url)
+	{  
+		$req=$condition;  
+		$header .= "POST $url HTTP/1.0\r\n";  
+		$header .= "User-Agent: Mozilla 4.0\r\n";
+		$header .= "Content-Type: application/x-www-form-urlencoded\r\n";  
+		$header .= "Content-Length: " . strlen($req) . "\r\n\r\n{$req}";  
+      
+		$fp = fsockopen($ip,80, $errno, $errstr,30); 
+		$res=9;
+		if(!$fp)
+		{  
+			$res = 'NOSERVER';
+		}else{
+			while (!feof($fp))
+			{  
+				fputs($fp, $header);  
+				$res = fgets ($fp, 1024);  
+			}  
+		}  
+		fclose ($fp);  
+  
+		return $res;  
+	}  
 ?>
